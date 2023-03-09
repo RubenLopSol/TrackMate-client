@@ -32,16 +32,16 @@ Fork and clone this repo and follow the belo instructions
 
 ### Routes
 
-| Method       | Endpoint             | Description                                           |
-| :---------  | :------------------- | :--------------------------------------------          |
-| ##POST##    | `/auth/login`        | return axios.post("http://localhost:5005/auth/login")  |
-| ##POST##    | `/auth/signup`       | return axios.post("http://localhost:5005/auth/signup") |
-| ##GET##     | `/auth/verify`       | return axios.post("http://localhost:5005/auth/verify") |
-| ##POST##    | `/api/examples`      | Send all packages to user                              |
-| ##GET##     | `/api/examples`      | Create a new package                                   |
-| ##GET##     | `/api/examples/${id}`| Send a especific information from edit form            |
-| ##PUT##     | `/api/examples/${id}`| Edit especific package base on his ID                  |
-| ##DELETE##  | `/api/examples/${id}`| Delete especific package base on his ID                |
+| Method     | Endpoint              | Description                                            |
+| :--------- | :-------------------- | :----------------------------------------------------- |
+| **POST**   | `/auth/login`         | return axios.post("http://localhost:5005/auth/login")  |
+| **POST**   | `/auth/signup`        | return axios.post("http://localhost:5005/auth/signup") |
+| **GET**    | `/auth/verify`        | return axios.post("http://localhost:5005/auth/verify") |
+| **POST**   | `/api/examples`       | Send all packages to user                              |
+| **GET**    | `/api/examples`       | Create a new package                                   |
+| **GET**    | `/api/examples/${id}` | Send a especific information from edit form            |
+| **PUT**    | `/api/examples/${id}` | Edit especific package base on his ID                  |
+| **DELETE** | `/api/examples/${id}` | Delete especific package base on his ID                |
 
 ### Models:
 

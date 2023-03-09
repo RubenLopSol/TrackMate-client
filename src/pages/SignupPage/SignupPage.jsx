@@ -8,6 +8,7 @@ function SignupPage() {
   const [password, setPassword] = useState("");
   const [passwordRep, setPasswordRep] = useState("");
   const [userName, setuserName] = useState("");
+  const [lastname, setuserLastname] = useState(" ")
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [isTransporter, SetIsTransporter] = useState(false);
 
@@ -17,7 +18,7 @@ function SignupPage() {
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
-    if(userName === "" || password === "" || passwordRep === "") {
+    if(userName === "" || lastname === "" || password === "" || passwordRep === "") {
       setErrorMessage("faltan campos!");
       return;
     }
@@ -39,7 +40,7 @@ function SignupPage() {
     */
 
     // Or using a service
-    axios.post(process.env.REACT_APP_SERVER_URL+"/auth/signup", {userName, isTransporter, email, password})
+    axios.post(process.env.REACT_APP_SERVER_URL+"/auth/signup", {userName, lastname, isTransporter, email, password})
         .then(response => {
           console.log(response.data)
           if(response.data.error === "el usuario ya existe") {
@@ -68,6 +69,11 @@ function SignupPage() {
       <div className="mb-3">
         <label htmlFor="exampleInputuserName" className="form-label">User userName</label>
         <input type="text" className="form-control" id="exampleInputuserName" value={userName} onChange={(e)=>setuserName(e.target.value)}/>
+        <div className="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div className="mb-3">
+        <label htmlFor="exampleInputuserName" className="form-label">Last Name</label>
+        <input type="text" className="form-control" id="exampleInputuserlastname" value={lastname} onChange={(e)=>setuserLastname(e.target.value)}/>
         <div className="form-text">We'll never share your email with anyone else.</div>
       </div>
       <div className="mb-3">

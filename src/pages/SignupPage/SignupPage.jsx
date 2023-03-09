@@ -73,16 +73,19 @@ function SignupPage() {
         <option value={false}>User</option>
         <option value={true}>Driver</option>
       </select>
+
       <div className="mb-3">
         <label htmlFor="exampleInputuserName" className="form-label">Name</label>
         <input type="text" className="form-control" id="exampleInputuserName" value={username} onChange={(e)=>setuserName(e.target.value)}/>
         <div className="form-text"></div>
       </div>
+      
       <div className="mb-3">
         <label htmlFor="exampleInputuserlastName" className="form-label">Last name</label>
         <input type="text" className="form-control" id="exampleInputuserlastName" value={lastname} onChange={(e)=>setlastName(e.target.value)}/>
         <div className="form-text"></div>
       </div>
+     
       <div className="mb-3">
         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} onChange={(e)=>setEmail(e.target.value)}/>

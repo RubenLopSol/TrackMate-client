@@ -7,7 +7,8 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRep, setPasswordRep] = useState("");
-  const [userName, setuserName] = useState("");
+  const [name, setName] = useState("");
+  const [lastName, setlastName] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [isTransporter, SetIsTransporter] = useState(false);
 
@@ -17,7 +18,7 @@ function SignupPage() {
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
-    if(userName === "" || password === "" || passwordRep === "") {
+    if(name === "" || password === "" || passwordRep === "") {
       setErrorMessage("faltan campos!");
       return;
     }
@@ -39,7 +40,7 @@ function SignupPage() {
     */
 
     // Or using a service
-    axios.post(process.env.REACT_APP_SERVER_URL+"/auth/signup", {userName, isTransporter, email, password})
+    axios.post(process.env.REACT_APP_SERVER_URL+"/auth/signup", {name, isTransporter, email, password})
         .then(response => {
           console.log(response.data)
           if(response.data.error === "el usuario ya existe") {
@@ -66,9 +67,14 @@ function SignupPage() {
     </select>
     <form onSubmit={handleSignupSubmit}>
       <div className="mb-3">
-        <label htmlFor="exampleInputuserName" className="form-label">User userName</label>
-        <input type="text" className="form-control" id="exampleInputuserName" value={userName} onChange={(e)=>setuserName(e.target.value)}/>
-        <div className="form-text">We'll never share your email with anyone else.</div>
+        <label htmlFor="exampleInputuserName" className="form-label">User</label>
+        <input type="text" className="form-control" id="exampleInputuserName" value={name} onChange={(e)=>setName(e.target.value)}/>
+        <div className="form-text">We'll never share your name with anyone else.</div>
+      </div>
+      <div className="mb-3">
+        <label htmlFor="exampleInputuserName" className="form-label">LastName</label>
+        <input type="text" className="form-control" id="exampleInputuserName" value={lastName} onChange={(e)=>setlastName(e.target.value)}/>
+        <div className="form-text">We'll never share your lastname with anyone else.</div>
       </div>
       <div className="mb-3">
         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>

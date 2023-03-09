@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+## About Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Hello! Our project intends to implement a very useful application to facilitate the delivery of packages by transport companies.
+In turn, provide a detailed user experience, about the process in which the package is, for the recipient of it.
+Below you will find more specific information about the code implemented in this case, the frontend part, with React.
 
-## Available Scripts
+![photo](imgREADME.png)
 
-In the project directory, you can run:
+### Project Deployment
 
-### `npm start`
+The project is deployed using fly.dev **[here](##)**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Work structure
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+We have developed this project using **[Trello](https://trello.com/b/ySq7J01o/proyecto-3)** to organize our workflow.
 
-### `npm test`
+### Installation guide
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Fork and clone this repo and follow the belo instructions
 
-### `npm run build`
+```
+    npm install
+    npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### User Roles
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+| Role             | Capabilities                                                                                                                                                                                                                      | Properities          |
+| :--------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| **User/User**    | User can `login/logout` to his/her personal profile and read/delete/create new packages, modify his/her personal data and one time package is send, can track the estatus of his sending looking the real position of the Carrier | isTransporter: false |
+| **User/Carrier** | Carrier have access to `login/logout` and to all packages, stored by sending day, and a map with the most optimal route to deliver his/her cargo                                                                                  | isTransporter: true  |
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Routes
 
-### `npm run eject`
+| Method     | Endpoint              | Description                                            |
+| :--------- | :-------------------- | :----------------------------------------------------- |
+| **POST**   | `/auth/login`         | return axios.post("http://localhost:5005/auth/login")  |
+| **POST**   | `/auth/signup`        | return axios.post("http://localhost:5005/auth/signup") |
+| **GET**    | `/auth/verify`        | return axios.post("http://localhost:5005/auth/verify") |
+| **POST**   | `/api/examples`       | Send all packages to user                              |
+| **GET**    | `/api/examples`       | Create a new package                                   |
+| **GET**    | `/api/examples/${id}` | Send a especific information from edit form            |
+| **PUT**    | `/api/examples/${id}` | Edit especific package base on his ID                  |
+| **DELETE** | `/api/examples/${id}` | Delete especific package base on his ID                |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Models:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+We have 2 models in our projects as below (Users, Package)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```javascript
+## User model
+const userSchema = new Schema(
+  {
+    email: {
+      type: String,
+      required: [true, "Email is required."],
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required."],
+    },
+    name: {
+      type: String,
+      required: [true, "Name is required."],
+    },
+  },
+  {
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    timestamps: true,
+  }
+);
 
-## Learn More
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```javascript
+## Package model
+const packageSchema = new Schema(
+  {
+   title: {
+    type: String,
+    required: true,
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   },
+   creator: {
+    type: Schema.Types.ObjectId, ref: "user"
+   },
+   description: String,
+   adress: {
+    type: String,
+    required: true,
+   },
+   filepath: {
+    type: String,
+   }
+  },
+  {
+    timestamps: true,
+  }
+);
+```

@@ -2,6 +2,7 @@ import "./NewPackage.css";
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import LocationSearchInput from "./Autocomplete";
 
 
 function NewPackage() {
@@ -39,7 +40,7 @@ function NewPackage() {
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputAddress" className="form-label">Address</label>
-            <input type ="text" className="form-control" value = {address} onChange={(e) => setAddress(e.target.value)}/>
+            <input type ="text" className="form-control" value = {address} onChange={LocationSearchInput}/>
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputSize" className="form-label">Size</label>

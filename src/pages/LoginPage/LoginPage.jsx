@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import authService from "../../services/auth.service";
 
+
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,7 +36,7 @@ function LoginPage() {
         // and at last navigate to the home page
         storeToken(response.data.authToken);
         authenticateUser();
-        navigate("/");
+        navigate("/profile");
       })
       .catch((error) => {
         // If the request resolves with an error, set the error message in the state
@@ -62,7 +63,9 @@ function LoginPage() {
 
         <button type="submit">Login</button>
       </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {errorMessage && <div className="alert alert-danger mt-3" role="alert">
+        {errorMessage}
+      </div>}
 
       <p>Don't have an account yet?</p>
       <Link to={"/signup"}> Sign Up</Link>

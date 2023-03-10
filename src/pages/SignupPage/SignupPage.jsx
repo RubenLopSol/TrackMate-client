@@ -7,7 +7,7 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordRep, setPasswordRep] = useState("");
-  const [userName, setuserName] = useState("");
+  const [username, setuserName] = useState("");
   const [lastname, setlastName] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
   const [isTransporter, SetIsTransporter] = useState(false);
@@ -18,7 +18,7 @@ function SignupPage() {
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
-    if(userName === "" || password === "" || passwordRep === "" || lastname === "") {
+    if(username === "" || password === "" || passwordRep === "" || lastname === "") {
       setErrorMessage("faltan campos!");
       return;
     }
@@ -40,7 +40,8 @@ function SignupPage() {
     */
 
     // Or using a service
-    axios.post(process.env.REACT_APP_SERVER_URL+"/auth/signup", {userName, lastname, isTransporter, email, password})
+    console.log("es transportador: ", isTransporter);
+    axios.post(process.env.REACT_APP_SERVER_URL+"/auth/signup", {username, lastname, isTransporter, email, password})
         .then(response => {
           console.log(response.data)
           if(response.data.error === "el usuario ya existe") {
@@ -61,14 +62,14 @@ function SignupPage() {
   return (
     <div className="SignupPage w-75 mx-auto row">
     <h1>Sign Up</h1>
-    <select className="form-select" aria-label="Default select example">
-      <option onChange={()=>SetIsTransporter(false)}>User</option>
-      <option onChange={()=>SetIsTransporter(true)}>Driver</option>
-    </select>
     <form onSubmit={handleSignupSubmit}>
+      <select className="form-select" aria-label="Default select example" onChange={(e)=>SetIsTransporter(e.target.value)}>
+        <option value={false}>User</option>
+        <option value={true}>Driver</option>
+      </select>
       <div className="mb-3">
         <label htmlFor="exampleInputuserName" className="form-label">Name</label>
-        <input type="text" className="form-control" id="exampleInputuserName" value={userName} onChange={(e)=>setuserName(e.target.value)}/>
+        <input type="text" className="form-control" id="exampleInputuserName" value={username} onChange={(e)=>setuserName(e.target.value)}/>
         <div className="form-text">We'll never share your email with anyone else.</div>
       </div>
       <div className="mb-3">
@@ -92,8 +93,10 @@ function SignupPage() {
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
+      {errorMessage && <div className="alert alert-danger mt-3" role="alert">
+        {errorMessage}
+      </div>}
+      
       <p>Already have account?</p>
       <Link to={"/login"}> Login</Link>
     </div>

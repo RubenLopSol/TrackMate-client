@@ -1,9 +1,10 @@
 import "./SelectTrans.css";
+import Totalmap from "../../components/Maps/Totalmap"
 
 function SelectTrans() {
   return (
     <div>
-      <h1>Select packages Trans</h1>
+      <Totalmap />
     </div>
   );
 }

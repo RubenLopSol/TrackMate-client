@@ -4,14 +4,14 @@ import Autocomplete from "../NewPackage/Autocomplete"
 import { useState } from "react";
 
 function ProfilePage() {
-  const [coordinates, setCoordinates] = useState({});
+  /* const [coordinates, setCoordinates] = useState({});
 
   const getAdressHandler = (latLng) => {
     setCoordinates(latLng);
-    console.log(coordinates)
-  }
+    console.log(latLng)
+  } */
   return(
-    <Autocomplete getAdressHandler={getAdressHandler}/>
+    {/* <Autocomplete getAdressHandler={getAdressHandler}/> */}
  )
 }
 

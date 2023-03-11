@@ -12,8 +12,8 @@ export function LocationSearchInput({getAdressHandler}) {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
-        /* console.log('Success', latLng); */
-        getAdressHandler(latLng);
+        console.log(address)
+        getAdressHandler(latLng, address);
       })
       .catch(error => console.error('Error', error));
   };
@@ -43,7 +43,7 @@ export function LocationSearchInput({getAdressHandler}) {
                 ? { backgroundColor: '#FAFAFA', cursor: 'pointer' }
                 : { backgroundColor: '#FFFFFF', cursor: 'pointer' };
               return (
-                <div
+                <div key={suggestion.index}
                   {...getSuggestionItemProps(suggestion, {
                     className,
                     style,

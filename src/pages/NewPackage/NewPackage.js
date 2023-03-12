@@ -36,36 +36,44 @@ function NewPackage() {
     return <Loading/>
   }
   return (
-    <>
-      <div className=" card w-25 mx-auto">
-        <form onSubmit={submitHandler}>
-          <div className="mb-3">
-            <label htmlFor="exampleInputtTitle" className="form-label">Title</label>
-            <input type="text" className="form-control" id="exampleInputtTitle" value={title} onChange={(e) => setTitle(e.target.value)} />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputDescription" className="form-label">Description</label>
-            <input type="text" className="form-control" id="exampleInputDescription" value={description} onChange={(e) => setDescription(e.target.value)} />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputAddress" className="form-label">Address</label>
-            <Autocomplete getAdressHandler={getAdressHandler}/>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputSize" className="form-label">Size</label>
-            <select className="form-select" aria-label="Default select example" onChange={(e) => setSize(e.target.value)}>
-              <option value="XS">XS</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
-              <option value="XXL">XXL</option>
-            </select>
-          </div>
-          <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
-      </div>
-    </>
+<div className="NewPage w-75 mx-auto">
+<h3>Add newPackage</h3>
+
+<form className="w-25 mx-auto" onSubmit={submitHandler}>
+
+  <div className="mb-3">
+    <label>Title</label>
+    <input type="text" className="form-control" placeholder="First name" value={title} onChange={(e) => setTitle(e.target.value)} />
+  </div>
+
+    <div className="mb-3">
+      <label>Description</label>
+      <input type="text" className="form-control" placeholder="Last name" value={description} onChange={(e) => setDescription(e.target.value)} />
+    </div>
+
+    <div className="mb-3">
+      <label>Size</label>
+      <select className="form-select form-select-mb-3" aria-label="Default select example" onChange={(e) => setSize(e.target.value)}>
+              <option className="" value="XS">XS</option>
+              <option className="" value="S">S</option>
+              <option className="" value="M">M</option>
+              <option className="" value="L">L</option>
+              <option className="" value="XL">XL</option>
+              <option className="" value="XXL">XXL</option>
+       </select>
+       
+    <div className="mb-3">
+      <label>Address</label>
+      <Autocomplete getAdressHandler={getAdressHandler}/>
+    </div>
+
+    
+    </div>
+
+    <button type="submit" className="btn btn-primary">Submit</button>
+</form>
+
+</div>
   );
 }
 export default NewPackage;

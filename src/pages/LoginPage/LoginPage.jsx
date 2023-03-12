@@ -35,7 +35,7 @@ function LoginPage() {
         // and at last navigate to the home page
         storeToken(response.data.authToken);
         authenticateUser();
-        navigate("/");
+        navigate("/profile");
       })
       .catch((error) => {
         // If the request resolves with an error, set the error message in the state
@@ -45,28 +45,26 @@ function LoginPage() {
   };
 
   return (
-    <div className="LoginPage">
-      <h1>Login</h1>
+<div className="LoginPage w-75 mx-auto">
+  <h3>Login</h3>
 
-      <form onSubmit={handleLoginSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
+  <form className="w-25 mx-auto" onSubmit={handleLoginSubmit}>
+    
+      <div className="mb-3">
+        <label>Email address</label>
+        <input type="email" className="form-control" placeholder="Enter email" value={email} onChange={handleEmail}/>
+      </div>
 
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
-
-        <button type="submit">Login</button>
-      </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-      <p>Don't have an account yet?</p>
-      <Link to={"/signup"}> Sign Up</Link>
-    </div>
+      <div className="mb-3">
+        <label>Password</label>
+        <input type="password" className="form-control" placeholder="Enter password" value={password} onChange={handlePassword}/>
+      </div>  
+     
+      <button type="submit" className="btn btn-primary">Login</button>
+  </form>
+  {errorMessage && <p className="error-message">{errorMessage}</p>}
+    <p className="text-right">Don't have an account yet ? </p> <Link id="link" to="/signup">Signup</Link> 
+  </div>
   );
 }
 

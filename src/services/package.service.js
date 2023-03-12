@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-class ExampleService {
+class PackageService {
   constructor() {
     this.api = axios.create({
       baseURL: process.env.REACT_APP_SERVER_URL || "http://localhost:5005"
@@ -18,36 +18,35 @@ class ExampleService {
       return config;
     });
   }
+  // GET /api/examples
+  getAll = async () => {
+    return this.api.get('/all');
+  }
+  
+  // GET /api/examples/:id
+  getOne = async (idPackage) => {
+    return this.api.get(`/${idPackage}`);
+  }
 
   // POST /api/examples
   createOne = async (requestBody) => {
-    return this.api.post('/api/examples', requestBody);
-  }
-
-  // GET /api/examples
-  getAll = async () => {
-    return this.api.get('/api/examples');
-  }
-
-  // GET /api/examples/:id
-  getOne = async (id) => {
-    return this.api.get(`/api/examples/${id}`);
+    return this.api.post('/new', requestBody);
   }
 
   // PUT /api/examples/:id
-  updateOne = async (id, requestBody) => {
-    return this.api.put(`/api/examples/${id}`, requestBody);
+  updateOne = async (packageId, requestBody) => {
+    return this.api.put(`/edit/${packageId}`, requestBody);
   }
 
   // DELETE /api/examples/:id
-  deleteProject = async (id) => {
-    return this.api.delete(`/api/examples/${id}`);
+  deleteProject = async (packageId) => {
+    return this.api.delete(`/delete/${packageId}`);
   } 
 
 
 }
 
 // Create one instance of the service
-const exampleService = new ExampleService();
+const packageService = new PackageService();
 
-export default exampleService;
+export default packageService;

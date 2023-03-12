@@ -60,42 +60,36 @@ function SignupPage() {
 
   return (
     <div className="SignupPage w-75 mx-auto">
-    <h1>Sign Up</h1>
-    <select className="form-select" aria-label="Default select example">
+    <h3>Sign Up</h3>
+    <select className="form-select w-25 mx-auto" aria-label="Default select example">
       <option onChange={()=>SetIsTransporter(false)}>User</option>
       <option onChange={()=>SetIsTransporter(true)}>Driver</option>
     </select>
-    <form onSubmit={handleSignupSubmit}>
+    <form className="w-25 mx-auto" onSubmit={handleSignupSubmit}>
       <div className="mb-3">
-        <label htmlFor="exampleInputuserName" className="form-label">User userName</label>
-        <input type="text" className="form-control" id="exampleInputuserName" value={userName} onChange={(e)=>setuserName(e.target.value)}/>
-        <div className="form-text">We'll never share your email with anyone else.</div>
+        <label>User Name</label>
+        <input type="text" className="form-control" placeholder="First name" value={userName} onChange={(e)=>setuserName(e.target.value)}/>
       </div>
-      <div className="mb-3">
-        <label htmlFor="exampleInputuserName" className="form-label">Last Name</label>
-        <input type="text" className="form-control" id="exampleInputuserlastname" value={lastname} onChange={(e)=>setuserLastname(e.target.value)}/>
-        <div className="form-text">We'll never share your email with anyone else.</div>
-      </div>
-      <div className="mb-3">
-        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-      </div>
-      <div className="mb-3">
-        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-        <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e)=>setPassword(e.target.value)}/>
-      </div>
-      <div className="mb-3">
-        <label htmlFor="exampleInputPasswordRep" className="form-label">Password</label>
-        <input type="password" className="form-control" id="exampleInputPasswordRep" onChange={(e)=>setPasswordRep(e.target.value)}/>
-      </div>
-      <button type="submit" className="btn btn-primary">Submit</button>
+        <div className="mb-3">
+          <label>Last name</label>
+          <input type="text" className="form-control" placeholder="Last name" value={lastname} onChange={(e)=>setuserLastname(e.target.value)}/>
+        </div>
+        <div className="mb-3">
+          <label>Email address</label>
+          <input type="email" className="form-control" placeholder="Enter email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+        </div>
+        <div className="mb-3">
+          <label>Password</label>
+          <input type="password" className="form-control" placeholder="Enter password" onChange={(e)=>setPassword(e.target.value)}/>
+        </div>  
+        <div className="mb-3">
+          <label>Repeat your Password</label>
+          <input type="password" className="form-control" placeholder="Enter password" onChange={(e)=>setPasswordRep(e.target.value)}/>
+        </div>
+        <button type="submit" className="btn btn-primary">Submit</button>
     </form>
-
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-      <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
+    {errorMessage && <p className="error-message">{errorMessage}</p>}
+      <p className="text-right">Already registered ? <Link id="link" to="/login">Login</Link> </p>
     </div>
   );
 }

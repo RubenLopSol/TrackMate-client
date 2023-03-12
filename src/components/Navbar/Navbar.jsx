@@ -28,8 +28,10 @@ function Navbar() {
             Dropdown
           </Link>
           <ul className="dropdown-menu">
-            <li><Link className="dropdown-item" href="#">Action</Link></li>
-            <li><Link className="dropdown-item" href="#">Another action</Link></li>
+            <li><Link className="dropdown-item" to="/select">/select</Link></li>
+            <li><Link className="dropdown-item" to="/day">/day</Link></li>
+            <li><Link className="dropdown-item" to="/user/:packageID">/user/:packageID</Link></li>
+            <li><Link className="dropdown-item" to="/user/newPackage">/user/newPackage</Link></li>
             <li><hr className="dropdown-divider"/></li>
             <li><Link className="dropdown-item" href="#">Something else here</Link></li>
           </ul>

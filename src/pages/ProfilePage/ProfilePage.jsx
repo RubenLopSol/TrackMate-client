@@ -1,4 +1,5 @@
 import "./ProfilePage.css";
+import packageService from "../../services/package.service.js"
 
 function ProfilePage() {
   return (

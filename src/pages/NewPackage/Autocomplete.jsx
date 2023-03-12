@@ -29,7 +29,7 @@ export function LocationSearchInput({getAdressHandler}) {
           <input
             {...getInputProps({
               placeholder: 'Search Places ...',
-              className: 'location-search-input',
+              className: 'form-control',
             })}
           />
           <div className="autocomplete-dropdown-container">

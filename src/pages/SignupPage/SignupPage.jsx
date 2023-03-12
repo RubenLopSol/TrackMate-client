@@ -10,7 +10,7 @@ function SignupPage() {
   const [username, setuserName] = useState("");
   const [lastname, setlastName] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
-  const [isTransporter, SetIsTransporter] = useState(false);
+  const [isTransporter, SetIsTransporter] = useState(null);
 
   const navigate = useNavigate();
 
@@ -18,43 +18,48 @@ function SignupPage() {
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
-    if(username === "" || password === "" || passwordRep === "" || lastname === "") {
-      setErrorMessage("faltan campos!");
+    if(username === "") {
+      setErrorMessage("Please, introduce username");
+      return;
+    }
+    if(password === "") {
+      setErrorMessage("Please, introduce password");
+      return;
+    }
+    if(lastname === "") {
+      setErrorMessage("Please, introduce lastname");
+      return;
+    }
+    if(email === "") {
+      setErrorMessage("Please, introduce email");
+      return;
+    }
+    if(isTransporter === null) {
+      setErrorMessage("Please, select type of user");
       return;
     }
     if(password !== passwordRep) {
-      setErrorMessage("passwords no coinciden!");
+      setErrorMessage("Passwords don't match!");
       return;
     }
-    /* const requestBody = { email, password, passwordRep, userName }; */
     
-    // Send a request to the server using axios
-    /* 
-    const authToken = localStorage.getItem("authToken");
-    axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/auth/signup`, 
-      requestBody, 
-      { headers: { Authorization: `Bearer ${authToken}` },
-    })
-    .then((response) => {})
-    */
-
-    // Or using a service
-    console.log("es transportador: ", isTransporter);
     axios.post(process.env.REACT_APP_SERVER_URL+"/auth/signup", {username, lastname, isTransporter, email, password})
         .then(response => {
-          console.log(response.data)
-          if(response.data.error === "el usuario ya existe") {
+          if(response.data.error === "Email already exist") {
             setErrorMessage(response.data.error)
             return;
           }
+          else if(response.data.error === "Password must have at least 6 characters and contain at least one number, one lowercase and one uppercase letter.") {
+          setErrorMessage(response.data.error)
+            return;
+          }          
           else {
             navigate("/login");
           }
         })
         .catch(err => {
-            console.log(err);
-            setErrorMessage("Ha habido un error y no se ha podido registrar");
+            console.log(err.request.response.split(":")[1]);
+            setErrorMessage(err.request.response.split(":")[1]);
             return;
         })
   };
@@ -64,23 +69,24 @@ function SignupPage() {
     <h1>Sign Up</h1>
     <form onSubmit={handleSignupSubmit}>
       <select className="form-select" aria-label="Default select example" onChange={(e)=>SetIsTransporter(e.target.value)}>
+        <option>Select User or Driver</option>
         <option value={false}>User</option>
         <option value={true}>Driver</option>
       </select>
       <div className="mb-3">
         <label htmlFor="exampleInputuserName" className="form-label">Name</label>
         <input type="text" className="form-control" id="exampleInputuserName" value={username} onChange={(e)=>setuserName(e.target.value)}/>
-        <div className="form-text">We'll never share your email with anyone else.</div>
+        <div className="form-text"></div>
       </div>
       <div className="mb-3">
         <label htmlFor="exampleInputuserlastName" className="form-label">Last name</label>
         <input type="text" className="form-control" id="exampleInputuserlastName" value={lastname} onChange={(e)=>setlastName(e.target.value)}/>
-        <div className="form-text">We'll never share your email with anyone else.</div>
+        <div className="form-text"></div>
       </div>
       <div className="mb-3">
         <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+        <div id="emailHelp" className="form-text"></div>
       </div>
       <div className="mb-3">
         <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
@@ -93,7 +99,7 @@ function SignupPage() {
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>
 
-      {errorMessage && <div className="alert alert-danger mt-3" role="alert">
+      {errorMessage && <div className="alert alert-danger m-4" role="alert">
         {errorMessage}
       </div>}
       

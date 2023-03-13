@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-export function LocationSearchInput() {
+
+export function LocationSearchInput({getAdressHandler}) {
   const [address, setAddress] = useState('');
+
   const handleChange = (address) => {
     setAddress(address);
   };
+
   const handleSelect = (address) => {
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
       .then(latLng => {
-        console.log('Success', latLng);
-        // call any function to handle the location data here
+        console.log(address)
+        getAdressHandler(latLng, address);
       })
       .catch(error => console.error('Error', error));
   };
+
   return (
     <PlacesAutocomplete
       value={address}
@@ -25,7 +29,7 @@ export function LocationSearchInput() {
           <input
             {...getInputProps({
               placeholder: 'Search Places ...',
-              className: 'location-search-input',
+              className: 'form-control',
             })}
           />
           <div className="autocomplete-dropdown-container">
@@ -39,7 +43,7 @@ export function LocationSearchInput() {
                 ? { backgroundColor: '#FAFAFA', cursor: 'pointer' }
                 : { backgroundColor: '#FFFFFF', cursor: 'pointer' };
               return (
-                <div
+                <div key={suggestion.index}
                   {...getSuggestionItemProps(suggestion, {
                     className,
                     style,
@@ -55,4 +59,7 @@ export function LocationSearchInput() {
     </PlacesAutocomplete>
   );
 }
+
+
+
 export default LocationSearchInput;

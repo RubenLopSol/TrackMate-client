@@ -1,51 +1,79 @@
 import "./NewPackage.css";
 import { useState } from "react"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import LocationSearchInput from "./Autocomplete";
-
+import { useNavigate, useParams } from "react-router-dom"
+import Autocomplete from "../NewPackage/Autocomplete"
+import Loading from "../../components/Loading/Loading";
 
 function NewPackage() {
-  
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [address, setAddress] = useState("");
-  const [size, setSize] = useState("XS")
+  const [addressInput, setAddress] = useState("");
+  const [size, setSize] = useState("");
+  const [coordinates, setCoordinates] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(undefined);
+  
+  const { idUser } = useParams()
 
- const navigate= useNavigate();
+  const navigate= useNavigate();
 
-
+  const getAdressHandler = (latLng, address) => {
+    setCoordinates(latLng);
+    setAddress(address);
+  }
   const submitHandler = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5005/package/new", { title, description, address, size})
-      .then(result => {
-        console.log(result)
-      })
-      .catch(err => console.log(err))
-      navigate("/profile")
-    
+    if(title === "") {
+      setErrorMessage("please introduce Title")
+      return;
+    }
+    if(description === "") {
+      setErrorMessage("please introduce Description")
+      return;
+    }
+    if(addressInput === "") {
+      setErrorMessage("please introduce Address")
+      return;
+    }
+    if(size === "") {
+      setErrorMessage("please introduce Size")
+      return;
+    }
+    setIsLoading(true);
+    axios.post("http://localhost:5005/package/new", { title, description, size, address: addressInput, coordinates, creator: idUser})
+    .then(result => {
+      setIsLoading(false)
+      navigate(`/profile/${idUser}`);
+    })
+    .catch(err => {
+      setIsLoading(false);
+      console.log(err)
+    })
   }
-
+  if(isLoading) {
+    return <Loading/>
+  }
   return (
     <>
       <div className="w-50 mx-auto">
         <form onSubmit={submitHandler}>
           <div className="mb-3">
             <label htmlFor="exampleInputtTitle" className="form-label">Title</label>
-            <input type="text" className="form-control" id="exampleInputtTitle" value={title} onChange={(e) => setTitle(e.target.value)} />
+            <input type="text" className="form-control" id="exampleInputtTitle" placeholder="package name ..." value={title} onChange={(e) => setTitle(e.target.value)} />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputDescription" className="form-label">Description</label>
-            <input type="text" className="form-control" id="exampleInputDescription" value={description} onChange={(e) => setDescription(e.target.value)} />
+            <input type="text" className="form-control" id="exampleInputDescription" placeholder="some description ..." value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputAddress" className="form-label">Address</label>
-            <input type ="text" className="form-control" value = {address} onChange={LocationSearchInput}/>
+            <Autocomplete getAdressHandler={getAdressHandler}/>
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputSize" className="form-label">Size</label>
-            <select className="form-select" aria-label="Default select example" value={size} onChange={(e) => setSize(e.target.value)}>
-
+            <select className="form-select" aria-label="Default select example" onChange={(e) => setSize(e.target.value)}>
+              <option>Select size</option>
               <option value="XS">XS</option>
               <option value="S">S</option>
               <option value="M">M</option>
@@ -54,14 +82,13 @@ function NewPackage() {
               <option value="XXL">XXL</option>
             </select>
           </div>
-
           <button type="submit" className="btn btn-primary">Submit</button>
         </form>
       </div>
-
+      {errorMessage && <div className="alert alert-danger m-4" role="alert">
+        {errorMessage}
+      </div>}
     </>
   );
 }
-
 export default NewPackage;
-

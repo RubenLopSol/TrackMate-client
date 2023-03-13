@@ -19,12 +19,15 @@ function Navbar() {
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <Link className="nav-link active" aria-current="page" to="/profile">Profile</Link>
+          <Link to="/profile" className="nav-link active" aria-current="page" >Profile</Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" href="#">Link</Link>
+          <Link to ="/select" className="nav-link">Select</Link>
         </li>
-        <li className="nav-item dropdown">
+        <li className="nav-item">
+          <Link to ="/user/newPackage" className="nav-link">New package</Link>
+        </li>
+       {/*  <li className="nav-item dropdown">
           <Link className="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
           </Link>
@@ -36,7 +39,7 @@ function Navbar() {
             <li><hr className="dropdown-divider"/></li>
             <li><Link className="dropdown-item" href="#">Something else here</Link></li>
           </ul>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link className="nav-link" onClick={logOutUser} to="/login">Logout</Link>
         </li>

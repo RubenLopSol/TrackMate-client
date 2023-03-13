@@ -1,7 +1,7 @@
 import "./NewPackage.css";
 import { useState } from "react"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Autocomplete from "../NewPackage/Autocomplete"
 import Loading from "../../components/Loading/Loading";
 
@@ -12,7 +12,10 @@ function NewPackage() {
   const [size, setSize] = useState("");
   const [coordinates, setCoordinates] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(undefined);
   
+  const { idUser } = useParams()
+
   const navigate= useNavigate();
 
   const getAdressHandler = (latLng, address) => {
@@ -21,11 +24,27 @@ function NewPackage() {
   }
   const submitHandler = (e) => {
     e.preventDefault();
+    if(title === "") {
+      setErrorMessage("please introduce Title")
+      return;
+    }
+    if(description === "") {
+      setErrorMessage("please introduce Description")
+      return;
+    }
+    if(addressInput === "") {
+      setErrorMessage("please introduce Address")
+      return;
+    }
+    if(size === "") {
+      setErrorMessage("please introduce Size")
+      return;
+    }
     setIsLoading(true);
-    axios.post("http://localhost:5005/package/new", { title, description, size, address: addressInput, coordinates})
+    axios.post("http://localhost:5005/package/new", { title, description, size, address: addressInput, coordinates, creator: idUser})
     .then(result => {
       setIsLoading(false)
-      navigate("/");
+      navigate(`/profile/${idUser}`);
     })
     .catch(err => {
       setIsLoading(false);
@@ -36,44 +55,40 @@ function NewPackage() {
     return <Loading/>
   }
   return (
-<div className="NewPage w-75 mx-auto">
-<h3>Add newPackage</h3>
-
-<form className="w-25 mx-auto" onSubmit={submitHandler}>
-
-  <div className="mb-3">
-    <label>Title</label>
-    <input type="text" className="form-control" placeholder="First name" value={title} onChange={(e) => setTitle(e.target.value)} />
-  </div>
-
-    <div className="mb-3">
-      <label>Description</label>
-      <input type="text" className="form-control" placeholder="Last name" value={description} onChange={(e) => setDescription(e.target.value)} />
-    </div>
-
-    <div className="mb-3">
-      <label>Size</label>
-      <select className="form-select form-select-mb-3" aria-label="Default select example" onChange={(e) => setSize(e.target.value)}>
-              <option className="" value="XS">XS</option>
-              <option className="" value="S">S</option>
-              <option className="" value="M">M</option>
-              <option className="" value="L">L</option>
-              <option className="" value="XL">XL</option>
-              <option className="" value="XXL">XXL</option>
-       </select>
-       
-    <div className="mb-3">
-      <label>Address</label>
-      <Autocomplete getAdressHandler={getAdressHandler}/>
-    </div>
-
-    
-    </div>
-
-    <button type="submit" className="btn btn-primary">Submit</button>
-</form>
-
-</div>
+    <>
+      <div className="w-50 mx-auto">
+        <form onSubmit={submitHandler}>
+          <div className="mb-3">
+            <label htmlFor="exampleInputtTitle" className="form-label">Title</label>
+            <input type="text" className="form-control" id="exampleInputtTitle" placeholder="package name ..." value={title} onChange={(e) => setTitle(e.target.value)} />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputDescription" className="form-label">Description</label>
+            <input type="text" className="form-control" id="exampleInputDescription" placeholder="some description ..." value={description} onChange={(e) => setDescription(e.target.value)} />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputAddress" className="form-label">Address</label>
+            <Autocomplete getAdressHandler={getAdressHandler}/>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputSize" className="form-label">Size</label>
+            <select className="form-select" aria-label="Default select example" onChange={(e) => setSize(e.target.value)}>
+              <option>Select size</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </div>
+          <button type="submit" className="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      {errorMessage && <div className="alert alert-danger m-4" role="alert">
+        {errorMessage}
+      </div>}
+    </>
   );
 }
 export default NewPackage;

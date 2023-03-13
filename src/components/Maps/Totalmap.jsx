@@ -15,12 +15,14 @@ function App() {
   }) 
 
   const [packages, setPackages] = useState([])
+  
 
   useEffect(() => {
     axios.get(`http://localhost:5005/package/all`)
     .then((response) => {
-      console.log("response", response.data)
+      console.log("response", response.data[0].coordinates)
       setPackages(response.data)
+      
     })
   }, [])
   
@@ -47,7 +49,7 @@ function App() {
             mapTypeControl: true,
           }}
         >
-         {packages.map(response => <Marker position={response.address} /> )} 
+         {packages.map(response => <Marker position={response.coordinates} /> )} 
         
         </GoogleMap>
       </Box>

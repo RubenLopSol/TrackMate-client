@@ -26,22 +26,22 @@ const [identificador, setIdentificador] = useState(null)
 
     }
 
-/*     useEffect(() => {
+  useEffect(() => {
         setIdentificador(setInterval(()=>{
             location();
             console.log("hola")
         }, 10000))
         return (
             clearInterval(identificador)
+        
         )
-     }, []) */
+     }, []) 
 
      
 
     return (
         <>
-            <p>Click the button to get your coordinates.</p>
-          {/*   <button onClick={getLocation}>Try It</button> */}
+
             <Flex
                 position='relative'
                 flexDirection='column'

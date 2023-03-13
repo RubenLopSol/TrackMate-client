@@ -14,6 +14,7 @@ function ProfilePage() {
   const [description, setDescription] = useState("");
   const [addressInput, setAddress] = useState("");
   const [size, setSize] = useState("");
+  const [idPackage, setIdPackage] = useState(null);
 
   const { user } = useContext(AuthContext)
 
@@ -24,17 +25,24 @@ function ProfilePage() {
     setAddress(address);
   }
 
-  const editar = (idPackage) => {
+  /* const editar = (idPackage) => {
     axios.put(`http://localhost:5005/package/${idPackage}/edit`)
     .then(result => {
-  
+      
         console.log("hola")
       navigate(`/select`)
     })
-  }
+  } */
   const submitHandler = (e) => {
     e.preventDefault();
-editar();
+    console.log(idPackage)
+    axios.put(`http://localhost:5005/package/${idPackage}/edit`, { title, description, address: addressInput, size, /* isTransported */})
+    .then(result => {
+      console.log("hola")
+      navigate(`/select`)
+    })
+    .catch(console.log("MIERDA"))
+/* editar(); */
   }
 
   useEffect(()=> {
@@ -50,7 +58,7 @@ editar();
   }
   return(
     <>
-      {!user.isTransporter &&
+      {/* {isTransporter && */}
         <div>
           <h2>Is user</h2>
           <div className="row mx-auto">
@@ -64,8 +72,9 @@ editar();
                       <p className="card-text">Address: {data.address}</p>
                       <p className="card-text">Package size: {data.size}</p>
                       <p className="card-text">State: {data.isTransported}</p>
-                      <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
-                      <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <button type="button" className="btn btn-primary m-2" onClick={()=> setIdPackage(data._id)} data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button>
+                      <button type="submit" className="btn btn-primary m-2" onClick={()=> deleteHandler(data._id)}>Delete</button>
+                      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                           <div className="modal-content">
                             <div className="modal-header">
@@ -100,19 +109,16 @@ editar();
                                     </select>
                                     <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" className="btn btn-primary" onClick={()=> editar(data._id)}>Save changes</button>
-                                    <button onClick={()=>deleteHandler(data._id)}>Delete</button>
+                                    <button type="submit" className="btn btn-primary">Save changes</button>
+                                    
+                                    </div>
                                   </div>
-
-                                  </div>
-                                  
                                 </form>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -120,8 +126,8 @@ editar();
             )
           })}
         </div>
-      </div>}
-      {user.isTransporter && <p>Is transporter</p>}
+      </div>{/* } */}
+      {/* {isTransporter && <p>Is transporter</p>} */}
       <Link to={`/user/newPackage`}><button type="button" className="btn btn-primary mt-2">New package</button></Link>
     </>
 

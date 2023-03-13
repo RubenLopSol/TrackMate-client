@@ -52,7 +52,7 @@ function App() {
           }
         /> */}
         <Route
-          path="/user/newPackage/:idUser"
+          path="/user/newPackage"
           element={
             <IsPrivate>
               <NewPackage />

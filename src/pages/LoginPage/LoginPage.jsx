@@ -38,7 +38,7 @@ function LoginPage() {
         storeToken(response.data.authToken);
         authenticateUser();
         setTimeout(()=> {
-          navigate(`/profile/${response.data.idUser}`);
+          navigate(`/profile`);
           setIsLoading(false);
         }, 1000)
       })

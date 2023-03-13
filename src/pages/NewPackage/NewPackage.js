@@ -1,9 +1,10 @@
 import "./NewPackage.css";
-import { useState } from "react"
+import { useState, useContext } from "react"
 import axios from "axios"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Autocomplete from "../NewPackage/Autocomplete"
 import Loading from "../../components/Loading/Loading";
+import { AuthContext } from "../../context/auth.context";
 
 function NewPackage() {
   const [title, setTitle] = useState("");
@@ -14,7 +15,7 @@ function NewPackage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
   
-  const { idUser } = useParams()
+  const { user } = useContext(AuthContext);
 
   const navigate= useNavigate();
 
@@ -41,10 +42,10 @@ function NewPackage() {
       return;
     }
     setIsLoading(true);
-    axios.post("http://localhost:5005/package/new", { title, description, size, address: addressInput, coordinates, creator: idUser})
+    axios.post("http://localhost:5005/package/new", { title, description, size, address: addressInput, coordinates, creator: user._id})
     .then(result => {
       setIsLoading(false)
-      navigate(`/profile/${idUser}`);
+      navigate(`/profile`);
     })
     .catch(err => {
       setIsLoading(false);

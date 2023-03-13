@@ -19,7 +19,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route
-          path="/profile/:idUser"
+          path="/profile"
           element={
             <IsPrivate>
               <ProfilePage />
@@ -42,14 +42,14 @@ function App() {
             </IsPrivate>
           }
         />
-        <Route
+        {/* <Route
           path="/user/:packageID"
           element={
             <IsPrivate>
               <Tracking />
             </IsPrivate>
           }
-        />
+        /> */}
         <Route
           path="/user/newPackage/:idUser"
           element={

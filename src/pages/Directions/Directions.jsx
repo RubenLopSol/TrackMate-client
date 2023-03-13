@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 
-
+import truck from "./truck.png"
 
 function Directions() {
 
-const [coordenadas, setCoordenadas] = useState({})
-const [identificador, setIdentificador] = useState(null)
+    const [coordenadas, setCoordenadas] = useState({})
+    const [identificador, setIdentificador] = useState(null)
 
 
     const location = function getLocation() {
@@ -21,32 +21,33 @@ const [identificador, setIdentificador] = useState(null)
             lat: position.coords.latitude,
             lng: position.coords.longitude
         };
-
+console.log("posicion" , position)
         setCoordenadas(position);
 
     }
 
-    const stop= () => {
+    const stop = () => {
         clearInterval(identificador)
         setIdentificador(null)
     }
+    const image = truck;
 
-  useEffect(() => {
-        setIdentificador(setInterval(()=>{
+/*     useEffect(() => {
+        setIdentificador(setInterval(() => {
             location();
             console.log("hola")
         }, 10000))
         return (
             clearInterval(identificador)
-        
-        )
-     }, []) 
 
-     
+        )
+    }, [])
+ */
+
 
     return (
         <>
-<button onClick={stop}>Stop</button>
+            <button onClick={stop}>Stop</button>
             <Flex
                 position='relative'
                 flexDirection='column'
@@ -65,7 +66,7 @@ const [identificador, setIdentificador] = useState(null)
                             mapTypeControl: true,
                         }}
                     >
-                        <Marker position={coordenadas} />
+                        <Marker position={coordenadas} icon={image} />
 
                     </GoogleMap>
                 </Box>

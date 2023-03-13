@@ -8,7 +8,7 @@ Below you will find more specific information about the code implemented in this
 
 ### Project Deployment
 
-The project is deployed using fly.dev **[here](##)**
+The project is deployed using fly.dev **[here](https://fly.io/apps/trackmateclient)**
 
 ### Work structure
 
@@ -43,61 +43,4 @@ Fork and clone this repo and follow the belo instructions
 | **PUT**    | `/api/examples/${id}` | Edit especific package base on his ID                  |
 | **DELETE** | `/api/examples/${id}` | Delete especific package base on his ID                |
 
-### Models:
 
-We have 2 models in our projects as below (Users, Package)
-
-```javascript
-## User model
-const userSchema = new Schema(
-  {
-    email: {
-      type: String,
-      required: [true, "Email is required."],
-      unique: true,
-      lowercase: true,
-      trim: true,
-    },
-    password: {
-      type: String,
-      required: [true, "Password is required."],
-    },
-    name: {
-      type: String,
-      required: [true, "Name is required."],
-    },
-  },
-  {
-
-    timestamps: true,
-  }
-);
-
-```
-
-```javascript
-## Package model
-const packageSchema = new Schema(
-  {
-   title: {
-    type: String,
-    required: true,
-
-   },
-   creator: {
-    type: Schema.Types.ObjectId, ref: "user"
-   },
-   description: String,
-   adress: {
-    type: String,
-    required: true,
-   },
-   filepath: {
-    type: String,
-   }
-  },
-  {
-    timestamps: true,
-  }
-);
-```

@@ -26,7 +26,7 @@ const [identificador, setIdentificador] = useState(null)
 
     }
 
-    useEffect(() => {
+/*     useEffect(() => {
         setIdentificador(setInterval(()=>{
             location();
             console.log("hola")
@@ -34,7 +34,7 @@ const [identificador, setIdentificador] = useState(null)
         return (
             clearInterval(identificador)
         )
-     }, [])
+     }, []) */
 
      
 

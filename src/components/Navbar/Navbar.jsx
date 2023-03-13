@@ -27,6 +27,9 @@ function Navbar() {
         <li className="nav-item">
           <Link to ="/user/newPackage" className="nav-link">New package</Link>
         </li>
+        <li className="nav-item">
+          <Link to ="/user/directions" className="nav-link">Direction</Link>
+        </li>
        {/*  <li className="nav-item dropdown">
           <Link className="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown

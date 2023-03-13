@@ -8,6 +8,7 @@ import Tracking from "./pages/TrackPackage/Tracking";
 import NewPackage from "./pages/NewPackage/NewPackage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
+import Directions from "./pages/Directions/Directions"
 
 import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
@@ -55,6 +56,14 @@ function App() {
           element={
             <IsPrivate>
               <NewPackage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path="/user/directions"
+          element={
+            <IsPrivate>
+              <Directions />
             </IsPrivate>
           }
         />

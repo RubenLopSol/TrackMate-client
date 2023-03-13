@@ -26,6 +26,11 @@ const [identificador, setIdentificador] = useState(null)
 
     }
 
+    const stop= () => {
+        clearInterval(identificador)
+        setIdentificador(null)
+    }
+
   useEffect(() => {
         setIdentificador(setInterval(()=>{
             location();
@@ -41,7 +46,7 @@ const [identificador, setIdentificador] = useState(null)
 
     return (
         <>
-
+<button onClick={stop}>Stop</button>
             <Flex
                 position='relative'
                 flexDirection='column'

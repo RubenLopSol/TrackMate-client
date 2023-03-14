@@ -8,16 +8,15 @@ import Tracking from "./pages/TrackPackage/Tracking";
 import NewPackage from "./pages/NewPackage/NewPackage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import Directions from "./pages/Directions/Directions"
-
-import Navbar from "./components/Navbar/Navbar";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage"
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
+
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      
       <Routes>
         <Route
           path="/profile"
@@ -43,14 +42,6 @@ function App() {
             </IsPrivate>
           }
         />
-        {/* <Route
-          path="/user/:packageID"
-          element={
-            <IsPrivate>
-              <Tracking />
-            </IsPrivate>
-          }
-        /> */}
         <Route
           path="/user/newPackage"
           element={
@@ -60,10 +51,10 @@ function App() {
           }
         />
         <Route
-          path="/user/directions"
+          path="/user/traking"
           element={
             <IsPrivate>
-              <Directions />
+              <Tracking />
             </IsPrivate>
           }
         />
@@ -82,6 +73,12 @@ function App() {
               {" "}
               <LoginPage />
             </IsAnon>
+          }
+        />
+        <Route
+          path="/*"
+          element={
+            <NotFoundPage />
           }
         />
       </Routes>

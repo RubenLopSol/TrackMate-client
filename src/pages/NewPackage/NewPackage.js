@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import Autocomplete from "../NewPackage/Autocomplete"
 import Loading from "../../components/Loading/Loading";
 import { AuthContext } from "../../context/auth.context";
+import Navbar from "../../components/Navbar/Navbar";
 
 function NewPackage() {
   const [title, setTitle] = useState("");
@@ -57,6 +58,7 @@ function NewPackage() {
   }
   return (
     <>
+      <Navbar />
       <div className="w-50 mx-auto">
         <form onSubmit={submitHandler}>
           <div className="mb-3">

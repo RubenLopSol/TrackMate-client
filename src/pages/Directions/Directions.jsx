@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import truck from "./truck.png"
+import Navbar from '../../components/Navbar/Navbar'
 function Directions() {
     const [coordenadas, setCoordenadas] = useState({})
     const [identificador, setIdentificador] = useState(null)
@@ -35,6 +36,7 @@ console.log("posicion" , position)
  */
     return (
         <>
+            <Navbar />
             <button onClick={stop}>Stop</button>
             <Flex
                 position='relative'

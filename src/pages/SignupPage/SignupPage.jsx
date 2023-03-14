@@ -58,7 +58,6 @@ function SignupPage() {
           }
         })
         .catch(err => {
-            console.log(err.request.response.split(":")[1]);
             setErrorMessage(err.request.response.split(":")[1]);
             return;
         })

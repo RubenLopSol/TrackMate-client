@@ -1,10 +1,14 @@
+import Navbar from "../../components/Navbar/Navbar";
 import "./WorkDay.css";
 
 function WorkDay() {
   return (
-    <div>
-      <h1>WorkTrans page</h1>
-    </div>
+    <>
+      <Navbar />
+      <div>
+        <h1>WorkTrans page</h1>
+      </div>
+    </>
   );
 }
 

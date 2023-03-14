@@ -3,6 +3,7 @@ import Totalmap from "../../components/Maps/Totalmap"
 import { useContext } from "react"
 import { AuthContext } from "../../context/auth.context";
 import Directions from "../Directions/Directions";
+import Navbar from "../../components/Navbar/Navbar";
 
 function SelectTrans() {
 
@@ -10,6 +11,7 @@ function SelectTrans() {
 
   return (
     <>
+      <Navbar />
       {user.isTransporter&&
         <div>
           <Totalmap />

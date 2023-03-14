@@ -22,11 +22,6 @@ function LoginPage() {
     e.preventDefault();
     const requestBody = { email, password };
     setIsLoading(true);
-    // Send a request to the server using axios
-    /* 
-    axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`)
-      .then((response) => {})
-    */
 
     // Or using a service
     authService

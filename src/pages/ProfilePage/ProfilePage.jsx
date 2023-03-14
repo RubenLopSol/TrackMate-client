@@ -5,10 +5,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Autocomplete from "../NewPackage/Autocomplete"
+import Navbar from "../../components/Navbar/Navbar";
 
 function ProfilePage() {
   const [packagesData, setpackagesData] = useState([]);
-  const [isTransporter, setIsTransporter] = useState(false);
   const [coordinates, setCoordinates] = useState({});
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -18,31 +18,22 @@ function ProfilePage() {
 
   const { user } = useContext(AuthContext)
 
-  const navigate = useNavigate();
-
   const getAdressHandler = (latLng, address) => {
     setCoordinates(latLng);
     setAddress(address);
   }
 
-  /* const editar = (idPackage) => {
-    axios.put(`http://localhost:5005/package/${idPackage}/edit`)
-    .then(result => {
-      
-        console.log("hola")
-      navigate(`/select`)
-    })
-  } */
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(idPackage)
-    axios.put(`http://localhost:5005/package/${idPackage}/edit`, { title, description, address: addressInput, size, /* isTransported */})
+    axios.put(`http://localhost:5005/package/${idPackage}/edit`, { title, description, address: addressInput, size, coordinates})
     .then(result => {
-      console.log("hola")
-      navigate(`/select`)
+      axios.get(`http://localhost:5005/package/${user._id}`)
+      .then(result => {
+        setpackagesData(result.data);
+      })
+      .catch(err => console.log(err))
     })
-    .catch(console.log("MIERDA"))
-/* editar(); */
+    .catch(err => console.log(err))
   }
 
   useEffect(()=> {
@@ -55,11 +46,21 @@ function ProfilePage() {
 
   const deleteHandler = (idDelete) => {
     axios.delete(`http://localhost:5005/package/delete/${idDelete}`)
+    .then(result => {
+      axios.get(`http://localhost:5005/package/${user._id}`)
+      .then(result => {
+        setpackagesData(result.data);
+      })
+      .catch(err => console.log(err))
+    })
   }
   return(
     <>
-      {/* {isTransporter && */}
-        <div>
+      <Navbar />
+      {!user.isTransporter && 
+      <div className="row">
+        <div className="col-sm-4">USER INFORMATION</div>
+        <div className="col-sm-8">
           <h2>Is user</h2>
           <div className="row mx-auto">
             {packagesData.map(data => {
@@ -109,7 +110,7 @@ function ProfilePage() {
                                     </select>
                                     <div className="modal-footer">
                                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" className="btn btn-primary">Save changes</button>
+                                    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
                                     
                                     </div>
                                   </div>
@@ -126,9 +127,11 @@ function ProfilePage() {
             )
           })}
         </div>
-      </div>{/* } */}
-      {/* {isTransporter && <p>Is transporter</p>} */}
-      <Link to={`/user/newPackage`}><button type="button" className="btn btn-primary mt-2">New package</button></Link>
+      </div>
+      </div>}
+      {user.isTransporter && 
+      <p>Is transporter</p>}
+      <Link to={`/user/newPackage`}><button type="button" className="btn btn-primary m-3">New package</button></Link>
     </>
 
   )

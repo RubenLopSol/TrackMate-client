@@ -2,7 +2,6 @@ import { Box, Flex } from '@chakra-ui/react'
 import { useJsApiLoader, GoogleMap, Marker } from '@react-google-maps/api'
 import { useState, useEffect } from 'react'
 import axios from "axios"
-
 import box from "./box.png"
 
 const center = { lat: 41.392478, lng: 2.144170 }
@@ -22,7 +21,7 @@ function App() {
     axios.get(`http://localhost:5005/package/all`)
       .then((response) => {
         setPackages(response.data)
-       })
+      })
   }, [])
 
   if (!isLoaded) {
@@ -30,31 +29,38 @@ function App() {
   }
 
   return (
-    <Flex
-      position='relative'
-      flexDirection='column'
-      alignItems='center'
-      h='100vh'
-      w='100vw'
-    >
-      <Box position='absolute' left={0} top={0} h='100%' w='100%'>
+    <>
+      <Flex
+        position='relative'
+        flexDirection='column'
+        alignItems='center'
+        h='100vh'
+        w='100vw'
+      >
+        <Box position='absolute' left={0} top={0} h='100%' w='100%'>
 
-        <GoogleMap
-          center={center}
-          zoom={15}
-          mapContainerStyle={{ width: '50%', height: '50%' }}
-          options={{
-            zoomControl: true,
-            mapTypeControl: true,
-          }}
-        >
-          {packages.map(response => <Marker position={response.coordinates} icon={image} />)}
+          <GoogleMap
+            center={center}
+            zoom={15}
+            mapContainerStyle={{ width: '50%', height: '50%' }}
+            options={{
+              zoomControl: true,
+              mapTypeControl: true,
+            }}
+          >
+            {packages.map(response => <Marker position={response.coordinates} icon={image}/>)}
 
-        </GoogleMap>
-      </Box>
+          </GoogleMap>
+        </Box>
 
-    </Flex>
+      </Flex>
+
+    </>
+
   )
 }
 
 export default App
+
+
+

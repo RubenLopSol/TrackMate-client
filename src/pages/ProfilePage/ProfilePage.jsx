@@ -3,11 +3,14 @@ import React from "react"
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import Image from "../../components/Cloudinary/cloudinary";
+
+
 
 function ProfilePage() {
   const [packagesData, setpackagesData] = useState([]);
   const [isTransporter, setIsTransporter] = useState(false)
-
+ 
   const { idUser } = useParams()
 
   useEffect(()=> {
@@ -23,6 +26,7 @@ function ProfilePage() {
       {!isTransporter && 
       <div>
         <h2>Is user</h2>
+        <Image/>
         <div className="row mx-auto">
           {packagesData.map(data => {
             return(
@@ -39,6 +43,7 @@ function ProfilePage() {
           })}
         </div>
       </div>}
+
       {isTransporter && <p>Is transporter</p>}
       <Link to={`/user/newPackage/${idUser}`}><button type="button" className="btn btn-primary mt-2">New package</button></Link>
     </>

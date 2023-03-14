@@ -36,6 +36,7 @@ class Image extends React.Component{
     const { imageUrl, imageAlt } = this.state;
 
     return (
+      <div>
       <main className="App">
         <section className="left-side">
           <form>
@@ -53,6 +54,7 @@ class Image extends React.Component{
           )}
         </section>
       </main>
+      </div>
     );
   }
 }

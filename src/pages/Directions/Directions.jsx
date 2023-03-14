@@ -5,25 +5,24 @@ import truck from "./truck.png"
 function Directions() {
     const [coordenadas, setCoordenadas] = useState({})
     const [identificador, setIdentificador] = useState(null)
-    const location = function getLocation() {
+    const location = function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position);
         }
     }
-    const position = function showPosition(position) {
-        position = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-        };
-console.log("posicion" , position)
-        setCoordenadas(position);
+    const position = function (pos) {
+        setCoordenadas({
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude
+        });
+        console.log("pos", pos.coords)
     }
     const stop = () => {
         clearInterval(identificador)
         setIdentificador(null)
     }
     const image = truck;
-/*     useEffect(() => {
+     useEffect(() => {
         setIdentificador(setInterval(() => {
             location();
             console.log("hola")
@@ -32,7 +31,7 @@ console.log("posicion" , position)
             clearInterval(identificador)
         )
     }, [])
- */
+
     return (
         <>
             <button onClick={stop}>Stop</button>

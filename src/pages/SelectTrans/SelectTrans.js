@@ -10,7 +10,7 @@ function SelectTrans() {
 
   return (
     <>
-      {user.isTransporter&&
+      {user.isTransporter &&
         <div>
           <Totalmap />
         </div>

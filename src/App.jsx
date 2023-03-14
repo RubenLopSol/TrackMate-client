@@ -3,12 +3,12 @@ import { Routes, Route } from "react-router-dom";
 
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SelectTrans from "./pages/SelectTrans/SelectTrans";
-import WorkDay from "./pages/WorkDay/WorkDay";
 import Tracking from "./pages/TrackPackage/Tracking";
 import NewPackage from "./pages/NewPackage/NewPackage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-import Directions from "./pages/Directions/Directions"
+
+import Navigation from "./pages/Navigation/Navigation"
 
 import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
@@ -36,21 +36,15 @@ function App() {
           }
         />
         <Route
-          path="/day"
+          path="/user/navigation"
           element={
             <IsPrivate>
-              <WorkDay />
+              <Navigation />
             </IsPrivate>
           }
         />
-        {/* <Route
-          path="/user/:packageID"
-          element={
-            <IsPrivate>
-              <Tracking />
-            </IsPrivate>
-          }
-        /> */}
+        
+     
         <Route
           path="/user/newPackage"
           element={
@@ -60,10 +54,10 @@ function App() {
           }
         />
         <Route
-          path="/user/directions"
+          path="/user/tracking"
           element={
             <IsPrivate>
-              <Directions />
+              <Tracking />
             </IsPrivate>
           }
         />

@@ -2,7 +2,7 @@ import "./SelectTrans.css";
 import Totalmap from "../../components/Maps/Totalmap"
 import { useContext } from "react"
 import { AuthContext } from "../../context/auth.context";
-import Directions from "../Directions/Directions";
+import Tracking from "../TrackPackage/Tracking";
 
 function SelectTrans() {
 
@@ -17,7 +17,7 @@ function SelectTrans() {
       }
       {!user.isTransporter && 
         <div>
-          <Directions/>
+          <Tracking/>
         </div>
       }
     </>

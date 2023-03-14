@@ -14,7 +14,11 @@ import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 
+import Image from "./components/Cloudinary/cloudinary";
+
+
 function App() {
+
   return (
     <div className="App">
       <Navbar />

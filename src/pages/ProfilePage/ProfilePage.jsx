@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Autocomplete from "../NewPackage/Autocomplete"
+import Image from "../../components/Cloudinary/cloudinary";
 
 function ProfilePage() {
   const [packagesData, setpackagesData] = useState([]);
@@ -61,6 +62,7 @@ function ProfilePage() {
       {/* {isTransporter && */}
         <div>
           <h2>Is user</h2>
+          <Image/>
           <div className="row mx-auto">
             {packagesData.map(data => {
               return (

@@ -6,6 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Autocomplete from "../../components/Autocomplete/Autocomplete"
 import Navbar from "../../components/Navbar/Navbar";
+import UserInfo from "../../components/UserInfo/userInfo";
 import SearchBar from "../../components/SearchBar/SearchBar"
 import Gif from "./giphy.gif"
 
@@ -65,7 +66,7 @@ function ProfilePage() {
       <Navbar />
       {!user.isTransporter && 
       <div className="row">
-        <div className="col-sm-4">USER INFORMATION</div>
+        <div className="col-sm-4">USER INFORMATION <UserInfo/></div>
         <div className="col-sm-8">
           <h2 className="mt-2"><SearchBar filter={filterHandler}/></h2>
           <div className="row mx-auto">

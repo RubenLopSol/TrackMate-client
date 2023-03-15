@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/auth.context";
 import axios from "axios"
 
 
+
 function ProfileUser(){
     const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
 

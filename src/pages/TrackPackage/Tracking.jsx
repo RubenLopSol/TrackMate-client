@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import truck from "./truck.png"
@@ -22,7 +22,7 @@ function Tracking() {
         setIdentificador(null)
     }
     const image = truck;
- /*     useEffect(() => {
+     useEffect(() => {
         location();
         setIdentificador(setInterval(() => {
             location();
@@ -31,7 +31,7 @@ function Tracking() {
         return (
             clearInterval(identificador)
         )
-    }, []) */
+    }, [])
 
     return (
         <>

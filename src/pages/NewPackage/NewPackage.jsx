@@ -43,7 +43,7 @@ function NewPackage() {
       return;
     }
     setIsLoading(true);
-    axios.post("http://localhost:5005/package/new", { title, description, size, address: addressInput, coordinates, creator: user._id})
+    axios.post(process.env.REACT_APP_SERVER_URL + "/package/new", { title, description, size, address: addressInput, coordinates, creator: user._id})
     .then(result => {
       setIsLoading(false)
       navigate(`/profile`);

@@ -2,8 +2,8 @@ import "./SelectTrans.css";
 import Totalmap from "../../components/Maps/Totalmap"
 import { useContext } from "react"
 import { AuthContext } from "../../context/auth.context";
-import Tracking from "../TrackPackage/Tracking";
 import Navbar from "../../components/Navbar/Navbar";
+import { Link } from "react-router-dom";
 function SelectTrans() {
 
   const { user } = useContext(AuthContext)
@@ -16,11 +16,7 @@ function SelectTrans() {
           <Totalmap />
         </div>
       }
-      {/* {!user.isTransporter && 
-        <div>
-          <Tracking/>
-        </div>
-      } */}
+      <Link to={"/user/navigation"}>Navigation</Link>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import {Box, Button, ButtonGroup, Flex, IconButton, Input, Text} from '@chakra-ui/react'
 import {useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer} from '@react-google-maps/api'
 import { useRef, useState, useEffect } from 'react'
+import Navbar from '../../components/Navbar/Navbar'
 import camion from "./camion.png"
 
 const center = { lat: 41.392478,  lng: 2.144170}
@@ -98,6 +99,8 @@ function Navigation () {
   }
 
   return (
+    <>
+    <Navbar/>
     <Flex
       position='relative'
       flexDirection='column'
@@ -184,6 +187,7 @@ function Navigation () {
         </div>
       </Box>
     </Flex>
+  </>
   )
 }
 

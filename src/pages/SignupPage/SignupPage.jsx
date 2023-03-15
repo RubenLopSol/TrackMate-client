@@ -64,8 +64,8 @@ function SignupPage() {
   };
 
   return (
-    <div className="SignupPage w-75 mx-auto row">
-    <h1>Sign Up</h1>
+    <div className="SignupPage w-50 mx-auto row">
+    <h1 className="mt-2 mb-4">Sign Up</h1>
     <form onSubmit={handleSignupSubmit}>
       <select className="form-select" aria-label="Default select example" onChange={(e)=>SetIsTransporter(e.target.value)}>
         <option>Select User or Driver</option>
@@ -73,40 +73,41 @@ function SignupPage() {
         <option value={true}>Driver</option>
       </select>
 
-      <div className="mb-3">
-        <label htmlFor="exampleInputuserName" className="form-label">Name</label>
+      <div className="mt-4 mb-4">
+        <label htmlFor="exampleInputuserName" className="form-label mb-1">Name</label>
         <input type="text" className="form-control" id="exampleInputuserName" value={username} onChange={(e)=>setuserName(e.target.value)}/>
         <div className="form-text"></div>
       </div>
       
-      <div className="mb-3">
-        <label htmlFor="exampleInputuserlastName" className="form-label">Last name</label>
+      <div className="mt-4 mb-4">
+        <label htmlFor="exampleInputuserlastName" className="form-label mb-1">Last name</label>
         <input type="text" className="form-control" id="exampleInputuserlastName" value={lastname} onChange={(e)=>setlastName(e.target.value)}/>
         <div className="form-text"></div>
       </div>
      
-      <div className="mb-3">
-        <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+      <div className="mt-4 mb-4">
+        <label htmlFor="exampleInputEmail1" className="form-label mb-1">Email address</label>
         <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} onChange={(e)=>setEmail(e.target.value)}/>
         <div id="emailHelp" className="form-text"></div>
       </div>
-      <div className="mb-3">
-        <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+      <div className="mt-4 mb-4">
+        <label htmlFor="exampleInputPassword1" className="form-label mb-1">Password</label>
         <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e)=>setPassword(e.target.value)}/>
       </div>
-      <div className="mb-3">
-        <label htmlFor="exampleInputPasswordRep" className="form-label">Password</label>
+      <div className="mt-4 mb-2">
+        <label htmlFor="exampleInputPasswordRep" className="form-label mb-1">Repeat password</label>
         <input type="password" className="form-control" id="exampleInputPasswordRep" onChange={(e)=>setPasswordRep(e.target.value)}/>
       </div>
       <button type="submit" className="btn btn-primary">Submit</button>
     </form>
 
-      {errorMessage && <div className="alert alert-danger m-4" role="alert">
+      {errorMessage && <div className="alert alert-danger m-4 w-5 mx-auto" role="alert">
         {errorMessage}
       </div>}
-      
-      <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
+      <div className="mt-3">
+        <p>Already have account?</p>
+        <Link className="link btn btn-primary mt-0.25" to="/login">Login</Link>
+      </div>
     </div>
   );
 }

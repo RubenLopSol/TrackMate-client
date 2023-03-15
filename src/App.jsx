@@ -7,7 +7,7 @@ import Tracking from "./pages/TrackPackage/Tracking";
 import NewPackage from "./pages/NewPackage/NewPackage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
-
+import Index from "./pages/index"
 import Navigation from "./pages/Navigation/Navigation"
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage"
 import Navbar from "./components/Navbar/Navbar";
@@ -19,6 +19,14 @@ function App() {
   return (
     <div className="App">
       <Routes>
+      <Route
+          path="/"
+          element={
+            <IsAnon>
+              <Index />
+            </IsAnon>
+          }
+        />
         <Route
           path="/"
           element={

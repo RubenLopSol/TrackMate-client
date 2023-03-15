@@ -15,9 +15,6 @@ function LoginPage() {
 
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
-  /* const handleEmail = (e) => setEmail(e.target.value);
-  const handlePassword = (e) => setPassword(e.target.value); */
-
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const requestBody = { email, password };
@@ -31,13 +28,10 @@ function LoginPage() {
     }
     setIsLoading(true);
 
-    // Or using a service
     authService
       .login(requestBody)
       .then((response) => {
-        // If the POST request is successful store the authentication token,
-        // after the token is stored authenticate the user
-        // and at last navigate to the home page
+
         storeToken(response.data.authToken);
         authenticateUser();
         setTimeout(()=> {
@@ -46,7 +40,7 @@ function LoginPage() {
         }, 1000)
       })
       .catch((error) => {
-        // If the request resolves with an error, set the error message in the state
+
         const errorDescription = error.response.data.message;
         setIsLoading(false);
         setErrorMessage(errorDescription);
@@ -57,25 +51,29 @@ function LoginPage() {
     return <Loading/>
   }
   return (
-<div className="LoginPage w-75 mx-auto">
-  <h3>Login</h3>
+<div className="LoginPage w-50 mx-auto row">
+  <h3 className="mt-2 mb-4">Login</h3>
 
-  <form className="w-25 mx-auto" onSubmit={handleLoginSubmit}>
+  <form onSubmit={handleLoginSubmit}>
     
-      <div className="mb-3">
+      <div className="mt-2 mb-4"> 
         <label>Email address</label>
-        <input type="email" className="form-control" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+        <input type="email" className="form-control mt-2" placeholder="Enter email" value={email} onChange={(e)=> setEmail(e.target.value)}/>
       </div>
 
-      <div className="mb-3">
+      <div className="mt-4 mb-3">
         <label>Password</label>
-        <input type="password" className="form-control" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+        <input type="password" className="form-control mt-2" placeholder="Enter password" value={password} onChange={(e)=> setPassword(e.target.value)}/>
       </div>  
      
       <button type="submit" className="btn btn-primary">Login</button>
   </form>
-  {errorMessage && <div className="alert alert-danger m-4" role="alert">{errorMessage}</div>}
-    <p className="text-right">Don't have an account yet ? </p> <Link id="link" to="/signup">Signup</Link> 
+  {errorMessage && <p className="error-message">{errorMessage}</p>}
+  <div className="mt-3">
+<p>Don't have an account yet ? </p> 
+    <Link id="link" to="/signup" className="link btn btn-primary mt-1">Sign up</Link> 
+
+  </div>
   </div>
   );
 }

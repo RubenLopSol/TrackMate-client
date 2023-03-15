@@ -18,8 +18,15 @@ import IsAnon from "./components/IsAnon/IsAnon";
 function App() {
   return (
     <div className="App">
-      
       <Routes>
+        <Route
+          path="/"
+          element={
+            <IsAnon>
+              <ProfilePage />
+            </IsAnon>
+          }
+        />
         <Route
           path="/profile"
           element={

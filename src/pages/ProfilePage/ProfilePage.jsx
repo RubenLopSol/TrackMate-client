@@ -3,7 +3,7 @@ import React, { useContext } from "react"
 import { AuthContext } from "../../context/auth.context";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Autocomplete from "../NewPackage/Autocomplete"
 import Navbar from "../../components/Navbar/Navbar";
 
@@ -109,9 +109,8 @@ function ProfilePage() {
                                       <option value="XXL">XXL</option>
                                     </select>
                                     <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
-                                    
+                                      <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                      <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
                                     </div>
                                   </div>
                                 </form>
@@ -128,10 +127,10 @@ function ProfilePage() {
           })}
         </div>
       </div>
+      <Link to={`/user/newPackage`}><button type="button" className="btn btn-primary m-3">New package</button></Link>
       </div>}
       {user.isTransporter && 
       <p>Is transporter</p>}
-      <Link to={`/user/newPackage`}><button type="button" className="btn btn-primary m-3">New package</button></Link>
     </>
 
   )

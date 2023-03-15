@@ -15,12 +15,20 @@ function LoginPage() {
 
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
-  const handleEmail = (e) => setEmail(e.target.value);
-  const handlePassword = (e) => setPassword(e.target.value);
+  /* const handleEmail = (e) => setEmail(e.target.value);
+  const handlePassword = (e) => setPassword(e.target.value); */
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const requestBody = { email, password };
+    if(email === "") {
+      setErrorMessage("Please, enter email")
+      return;
+    }
+    if(password === "") {
+      setErrorMessage("Please, enter password")
+      return;
+    }
     setIsLoading(true);
 
     // Or using a service
@@ -40,6 +48,7 @@ function LoginPage() {
       .catch((error) => {
         // If the request resolves with an error, set the error message in the state
         const errorDescription = error.response.data.message;
+        setIsLoading(false);
         setErrorMessage(errorDescription);
       });
   };
@@ -55,17 +64,17 @@ function LoginPage() {
     
       <div className="mb-3">
         <label>Email address</label>
-        <input type="email" className="form-control" placeholder="Enter email" value={email} onChange={handleEmail}/>
+        <input type="email" className="form-control" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)}/>
       </div>
 
       <div className="mb-3">
         <label>Password</label>
-        <input type="password" className="form-control" placeholder="Enter password" value={password} onChange={handlePassword}/>
+        <input type="password" className="form-control" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)}/>
       </div>  
      
       <button type="submit" className="btn btn-primary">Login</button>
   </form>
-  {errorMessage && <p className="error-message">{errorMessage}</p>}
+  {errorMessage && <div className="alert alert-danger m-4" role="alert">{errorMessage}</div>}
     <p className="text-right">Don't have an account yet ? </p> <Link id="link" to="/signup">Signup</Link> 
   </div>
   );

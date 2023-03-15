@@ -63,6 +63,10 @@ function AuthProviderWrapper(props) {
     authenticateUser();
   };
 
+  const getToken = () => {
+    return localStorage.getItem("authToken");
+  }
+
   useEffect(() => {
     // Run this code once the AuthProviderWrapper component in the App loads for the first time.
     // This effect runs when the application and the AuthProviderWrapper component load for the first time.
@@ -75,6 +79,7 @@ function AuthProviderWrapper(props) {
         isLoggedIn,
         isLoading,
         user,
+        getToken,
         storeToken,
         authenticateUser,
         logOutUser,

@@ -16,11 +16,11 @@ function SelectTrans() {
           <Totalmap />
         </div>
       }
-      {!user.isTransporter && 
+      {/* {!user.isTransporter && 
         <div>
           <Tracking/>
         </div>
-      }
+      } */}
     </>
   );
 }

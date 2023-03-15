@@ -61,7 +61,7 @@ function Tracking() {
 }
 export default Tracking;
 
-    return (
+    /* return (
         <>
             <button onClick={stop}>Stop</button>
             <Flex
@@ -87,4 +87,4 @@ export default Tracking;
             </Flex>
         </>)
 }
-export default Tracking;
+export default Tracking; */

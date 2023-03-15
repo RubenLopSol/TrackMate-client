@@ -17,45 +17,49 @@ function ProfilePage() {
   const [addressInput, setAddress] = useState("");
   const [size, setSize] = useState("");
   const [idPackage, setIdPackage] = useState(null);
+  const [filteredPack, setFiltered] = useState([])
 
   const { user } = useContext(AuthContext)
+
+  const filterHandler = (filterInput) => {
+    setFiltered(packagesData.filter(pack => pack._id.includes(filterInput)));
+  }
 
   const getAdressHandler = (latLng, address) => {
     setCoordinates(latLng);
     setAddress(address);
   }
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    axios.put(process.env.REACT_APP_SERVER_URL +`/package/${idPackage}/edit`, { title, description, address: addressInput, size, coordinates})
+  const getAllPackages = () => {
+    axios.get(process.env.REACT_APP_SERVER_URL + `/package/${user._id}`)
     .then(result => {
-      axios.get(process.env.REACT_APP_SERVER_URL +`/package/${user._id}`)
-      .then(result => {
-        setpackagesData(result.data);
-      })
-      .catch(err => console.log(err))
+      setpackagesData(result.data);
+      setFiltered(result.data);
+    })
+    .catch(err => console.log(err))
+  }
+
+  const submitEditHandler = (e) => {
+    e.preventDefault();
+    axios.put(process.env.REACT_APP_SERVER_URL + `/package/${idPackage}/edit`, { address: addressInput, coordinates})
+    .then(result => {
+      getAllPackages();
     })
     .catch(err => console.log(err))
   }
 
   useEffect(()=> {
-    axios.get(process.env.REACT_APP_SERVER_URL +`/package/${user._id}`)
-      .then(result => {
-        setpackagesData(result.data);
-      })
-      .catch(err => console.log(err))
+    getAllPackages();
   }, [])
 
   const deleteHandler = (idDelete) => {
-    axios.delete(process.env.REACT_APP_SERVER_URL+`/package/delete/${idDelete}`)
+    axios.delete(process.env.REACT_APP_SERVER_URL + `/package/delete/${idDelete}`)
     .then(result => {
-      axios.get(process.env.REACT_APP_SERVER_URL+`/package/${user._id}`)
-      .then(result => {
-        setpackagesData(result.data);
-      })
-      .catch(err => console.log(err))
+      getAllPackages();
     })
+    .catch(err => console.log(err))
   }
+  
   return(
     <>
       <Navbar />
@@ -63,9 +67,9 @@ function ProfilePage() {
       <div className="row">
         <div className="col-sm-4">USER INFORMATION</div>
         <div className="col-sm-8">
-          <h2 className="mt-2"><SearchBar/></h2>
+          <h2 className="mt-2"><SearchBar filter={filterHandler}/></h2>
           <div className="row mx-auto">
-            {packagesData.map(data => {
+            {filteredPack.map(data => {
               return (
                 <div key={data._id} className="col-sm-6 mb-3 mb-sm-0 mt-2">
                   <div className="card">
@@ -85,7 +89,7 @@ function ProfilePage() {
                             </div>
                             <div className="modal-body">
                               <div className="w-50 mx-auto">
-                                <form onSubmit={submitHandler}>
+                                <form onSubmit={submitEditHandler}>
                                   <div className="mb-3">
                                     <label htmlFor="exampleInputAddress" className="form-label">Address</label>
                                     <Autocomplete getAdressHandler={getAdressHandler} />

@@ -1,19 +1,89 @@
 import {Box, Button, ButtonGroup, Flex, IconButton, Input, Text} from '@chakra-ui/react'
 import {useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer} from '@react-google-maps/api'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useContext } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import camion from "./camion.png"
+import { packageContext } from '../../context/packages.context'
+import SelectedPackages from "../../components/SelectedPackages/SelectedPackages"
+import truck from "./truck.png"
+import axios from 'axios'
 
 const center = { lat: 41.392478,  lng: 2.144170}
 const image = camion;
 
 function Navigation () {
-  const { isLoaded } = useJsApiLoader({
+ /*  const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyB-bxisiqGND7MJCIQkaE7bbu2bjGSCC0g',
     libraries: ['places'],
-  }) 
+  })  */
 
-  const [map, setMap] = useState((null))
+  const [coordenadas, setCoordenadas] = useState({})
+    const [identificador, setIdentificador] = useState(null)
+    const location = function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position);
+        }
+    }
+    const position = function (pos) {
+        setCoordenadas({
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude
+        });
+        
+        console.log("pos", pos.coords)
+    }
+    const stop = () => {
+        clearInterval(identificador)
+        setIdentificador(null)
+    }
+    const image = truck;
+     useEffect(() => {
+        location();
+        setIdentificador(setInterval(() => {
+            location();
+            console.log("hola")
+        }, 10000))
+        return (
+            clearInterval(identificador)
+        )
+    }, [])
+
+  const { driverPackages } = useContext(packageContext)
+
+  return(
+    <div className='row'>
+      <div className='col-sm-8'>
+        <>
+            <button onClick={stop}>Stop</button>
+            <Flex
+                position='relative'
+                flexDirection='column'
+                alignItems='center'
+                h='100vh'
+                w='100vw'
+            >
+                <Box position='absolute' left={0} top={0} h='100%' w='100%'>
+                    <GoogleMap
+                        center={coordenadas}
+                        zoom={15}
+                        mapContainerStyle={{ width: '50%', height: '50%' }}
+                        options={{
+                            zoomControl: true,
+                            mapTypeControl: true,
+                        }}
+                    >
+                        <Marker position={coordenadas} icon={image} />
+                    </GoogleMap>
+                </Box>
+            </Flex>
+        </>
+      </div>
+      <div className='col-sm-4'>
+        <SelectedPackages />
+      </div>
+    </div>
+  )
+  /* const [map, setMap] = useState((null))
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const [distance, setDistance] = useState('')
   const [duration, setDuration] = useState('')
@@ -41,7 +111,7 @@ function Navigation () {
   const waypointsRef = useRef()
   const destinationRef = useRef()
   console.log("waypoints", waypointsRef)
-  console.log("origen", originRef)
+  console.log("origen", originRef) */
   
  /*  if (!isLoaded) {
     return <p>Loading...</p>
@@ -58,7 +128,7 @@ function Navigation () {
         )
     }, []) */
 
-  async function calculateRoute() {
+ /*  async function calculateRoute() {
     if (originRef.current.value === ''|| destinationRef.current.value === '') {
       return
     }
@@ -188,7 +258,7 @@ function Navigation () {
       </Box>
     </Flex>
   </>
-  )
+  ) */
 }
 
 export default Navigation;

@@ -4,14 +4,13 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
 
 function Navbar() {
-  // Subscribe to the AuthContext to gain access to
-  // the values from AuthContext.Provider's `value` prop
-  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
+
+  const { user, logOutUser } = useContext(AuthContext);
   
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
   <div className="container-fluid">
-    {user && <h1 className="navbar-brand" >Welcome {user.username}</h1>}
+    {user && <Link to={"/profile"} className="navbar-brand">TrackMate</Link>}
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
@@ -35,11 +34,11 @@ function Navbar() {
             <Link to ="/user/newPackage" className="nav-link">New package</Link>
           </li> 
         }
-        {user.isTransporter &&
+        {/* {user.isTransporter &&
           <li className="nav-item">
             <Link to ="/user/navigation" className="nav-link">Navegation</Link>
           </li>
-        }
+        } */}
        {/*  <li className="nav-item dropdown">
           <Link className="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown

@@ -61,9 +61,10 @@ function TotalMap() {
             return (
               <div key={pack._id}>
                 <Marker position={pack.coordinates} icon={image}>
-                  <InfoWindow position={pack.coordinates}>
+                  <InfoWindow position={pack.coordinates} visble={true}>
                     <div>
-                      <h1>{pack.title}</h1>
+                      <p>{pack._id}</p>
+                      <p>{pack.address}</p>
                       <button onClick={()=> addPackageHandler(pack._id)}>Add route</button>
                     </div>
                   </InfoWindow>

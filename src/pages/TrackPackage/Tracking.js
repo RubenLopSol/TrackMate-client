@@ -60,31 +60,3 @@ function Tracking() {
         </>)
 }
 export default Tracking;
-
-    /* return (
-        <>
-            <button onClick={stop}>Stop</button>
-            <Flex
-                position='relative'
-                flexDirection='column'
-                alignItems='center'
-                h='100vh'
-                w='100vw'
-            >
-                <Box position='absolute' left={0} top={0} h='100%' w='100%'>
-                    <GoogleMap
-                        center={coordenadas}
-                        zoom={15}
-                        mapContainerStyle={{ width: '50%', height: '50%' }}
-                        options={{
-                            zoomControl: true,
-                            mapTypeControl: true,
-                        }}
-                    >
-                        <Marker position={coordenadas} icon={image} />
-                    </GoogleMap>
-                </Box>
-            </Flex>
-        </>)
-}
-export default Tracking; */

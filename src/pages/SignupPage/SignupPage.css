@@ -63,3 +63,7 @@ body, html, .App, #root, .auth-wrapper {
     text-decoration:none;
     font-weight:bold ;
 }
+.link {
+  color: white;
+  text-decoration: none;
+}

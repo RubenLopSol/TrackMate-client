@@ -22,7 +22,7 @@ function TotalMap() {
   const image = box
 
   useEffect(() => {
-    axios.get(`http://localhost:5005/package/all`)
+    axios.get(process.env.REACT_APP_SERVER_URL + `/package/all`)
       .then((response) => {
         setPackages(response.data)
       })
@@ -83,6 +83,3 @@ function TotalMap() {
 }
 
 export default TotalMap;
-
-
-

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import "./index.css";
 import Gerard from "./Gerard.JPG"
 import Xabi from "./Xabi.JPG"
+import Ruben from "./Ruben.JPG"
 import Video from "./video.mp4"
 function Index() {
     return (
@@ -54,7 +55,8 @@ function Index() {
                             <img src={Gerard} className="rounded-circle w-50 h-75" alt="Gerard"></img>
                         </div>
                         <div className="col-md-4">
-                            <h4>Rubén Lopez Solé</h4>
+                            <h4>Rubén López Solé</h4>
+                            <img src={Ruben} className="rounded-circle w-50 h-75" alt="Ruben"></img>
                         </div>
                         <div className="col-md-4">
                             <h4>Xabier Naseem Mohammad</h4>

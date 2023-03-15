@@ -8,11 +8,11 @@ class PackageService {
 
   // GET /package/all
   getAllPackages = async () => {
-    return axios.get(process.env.REACT_APP_API_URL + "/package/all");
+    return axios.get(process.env.REACT_APP_SERVER_URL + "/package/all");
   }
   // GET /package/:userid
   getUserPackages = async (userid) => {
-    return axios.get(process.env.REACT_APP_API_URL + `/package/${userid}`);
+    return axios.get(process.env.REACT_APP_SERVER_URL + `/package/${userid}`);
   }
 
   /* // POST /api/examples

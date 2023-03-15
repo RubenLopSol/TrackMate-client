@@ -1,49 +1,126 @@
 import "./ProfilePage.css";
-import React from "react"
+import React, { useContext } from "react"
+import { AuthContext } from "../../context/auth.context";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Autocomplete from "../../components/Autocomplete/Autocomplete"
+import Navbar from "../../components/Navbar/Navbar";
+import SearchBar from "../../components/SearchBar/SearchBar"
+import Gif from "./giphy.gif"
 
 function ProfilePage() {
   const [packagesData, setpackagesData] = useState([]);
-  const [isTransporter, setIsTransporter] = useState(false)
+  const [coordinates, setCoordinates] = useState({});
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [addressInput, setAddress] = useState("");
+  const [size, setSize] = useState("");
+  const [idPackage, setIdPackage] = useState(null);
 
-  const { idUser } = useParams()
+  const { user } = useContext(AuthContext)
+
+  const getAdressHandler = (latLng, address) => {
+    setCoordinates(latLng);
+    setAddress(address);
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    axios.put(`http://localhost:5005/package/${idPackage}/edit`, { title, description, address: addressInput, size, coordinates})
+    .then(result => {
+      axios.get(`http://localhost:5005/package/${user._id}`)
+      .then(result => {
+        setpackagesData(result.data);
+      })
+      .catch(err => console.log(err))
+    })
+    .catch(err => console.log(err))
+  }
 
   useEffect(()=> {
-    axios(`http://localhost:5005/package/${idUser}`)
+    axios.get(`http://localhost:5005/package/${user._id}`)
       .then(result => {
         setpackagesData(result.data);
       })
       .catch(err => console.log(err))
   }, [])
 
+  const deleteHandler = (idDelete) => {
+    axios.delete(`http://localhost:5005/package/delete/${idDelete}`)
+    .then(result => {
+      axios.get(`http://localhost:5005/package/${user._id}`)
+      .then(result => {
+        setpackagesData(result.data);
+      })
+      .catch(err => console.log(err))
+    })
+  }
   return(
     <>
-      {!isTransporter && 
-      <div>
-        <h2>Is user</h2>
-        <div className="row mx-auto">
-          {packagesData.map(data => {
-            return(
-              <div key={data._id} className="col-sm-6 mb-3 mb-sm-0 mt-2">
-                <div className="card">
-                  <div className="card-body">
-                    <h5 className="card-title">Package name: {data.title}</h5>
-                    <p className="card-text">Descripción: {data.description}</p>
-                    <p className="card-text">Address: {data.address}</p>
+      <Navbar />
+      {!user.isTransporter && 
+      <div className="row">
+        <div className="col-sm-4">USER INFORMATION</div>
+        <div className="col-sm-8">
+          <h2 className="mt-2"><SearchBar/></h2>
+          <div className="row mx-auto">
+            {packagesData.map(data => {
+              return (
+                <div key={data._id} className="col-sm-6 mb-3 mb-sm-0 mt-2">
+                  <div className="card">
+                    <div className="card-body">
+                    <img className="w-25 h-25" src={Gif} alt="gif"></img>
+                      <h5 className="card-title">Tracking number: {data._id}</h5>
+                      <p className="card-text">Address: {data.address}</p>
+                      <p className="card-text">State: {data.isTransported}</p>
+                      <button type="button" className="btn btn-primary m-2" onClick={()=> setIdPackage(data._id)} data-bs-toggle="modal" data-bs-target="#exampleModal">Edit adress</button>
+                      
+                      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div className="modal-dialog">
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h1 className="modal-title fs-5" id="exampleModalLabel">Edit adress</h1>
+                              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                              <div className="w-50 mx-auto">
+                                <form onSubmit={submitHandler}>
+                                  <div className="mb-3">
+                                    <label htmlFor="exampleInputAddress" className="form-label">Address</label>
+                                    <Autocomplete getAdressHandler={getAdressHandler} />
+                                  </div>
+                                  <div className="mb-3">
+                                 
+                                    <div className="modal-footer">
+                                    <button type="submit" className="btn btn-danger me-2" data-bs-dismiss="modal" onClick={()=> deleteHandler(data._id)}>Delete</button>
+
+                                    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                                    
+                                    
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              
             )
           })}
         </div>
+      </div>
+      <Link to={`/user/newPackage`}><button type="button" className="btn btn-primary m-3">New package</button></Link>
       </div>}
-      {isTransporter && <p>Is transporter</p>}
-      <Link to={`/user/newPackage/${idUser}`}><button type="button" className="btn btn-primary mt-2">New package</button></Link>
+      {user.isTransporter && 
+      <p>Is transporter</p>}
     </>
-    
- )
+
+  )
 }
 
 export default ProfilePage;

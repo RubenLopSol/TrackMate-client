@@ -8,11 +8,10 @@ function Navbar() {
   // the values from AuthContext.Provider's `value` prop
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
   
-
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
   <div className="container-fluid">
-    <h1 className="navbar-brand" >Welcome "##"</h1>
+    {user && <h1 className="navbar-brand" >Welcome {user.username}</h1>}
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
@@ -21,15 +20,26 @@ function Navbar() {
         <li className="nav-item">
           <Link to="/profile" className="nav-link active" aria-current="page" >Profile</Link>
         </li>
+        {user.isTransporter && 
+          <li className="nav-item">
+            <Link to ="/select" className="nav-link">Select</Link>
+          </li> 
+        }
+        {!user.isTransporter && 
         <li className="nav-item">
-          <Link to ="/select" className="nav-link">Select</Link>
-        </li>
-        <li className="nav-item">
-          <Link to ="/user/newPackage" className="nav-link">New package</Link>
-        </li>
-        <li className="nav-item">
-          <Link to ="/user/directions" className="nav-link">Direction</Link>
-        </li>
+          <Link to ="/user/tracking" className="nav-link">Track</Link>
+        </li> 
+        } 
+        {!user.isTransporter &&
+          <li className="nav-item">
+            <Link to ="/user/newPackage" className="nav-link">New package</Link>
+          </li> 
+        }
+        {user.isTransporter &&
+          <li className="nav-item">
+            <Link to ="/user/navigation" className="nav-link">Navegation</Link>
+          </li>
+        }
        {/*  <li className="nav-item dropdown">
           <Link className="nav-link dropdown-toggle" to="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
@@ -47,10 +57,6 @@ function Navbar() {
           <Link className="nav-link" onClick={logOutUser} to="/login">Logout</Link>
         </li>
       </ul>
-      <form className="d-flex" role="search">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>

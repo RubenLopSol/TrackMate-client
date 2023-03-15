@@ -27,9 +27,9 @@ function ProfilePage() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    axios.put(process.env.REACT_APP_API_URL +`/package/${idPackage}/edit`, { title, description, address: addressInput, size, coordinates})
+    axios.put(process.env.REACT_APP_SERVER_URL +`/package/${idPackage}/edit`, { title, description, address: addressInput, size, coordinates})
     .then(result => {
-      axios.get(process.env.REACT_APP_API_URL +`/package/${user._id}`)
+      axios.get(process.env.REACT_APP_SERVER_URL +`/package/${user._id}`)
       .then(result => {
         setpackagesData(result.data);
       })
@@ -39,7 +39,7 @@ function ProfilePage() {
   }
 
   useEffect(()=> {
-    axios.get(process.env.REACT_APP_API_URL +`/package/${user._id}`)
+    axios.get(process.env.REACT_APP_SERVER_URL +`/package/${user._id}`)
       .then(result => {
         setpackagesData(result.data);
       })
@@ -47,9 +47,9 @@ function ProfilePage() {
   }, [])
 
   const deleteHandler = (idDelete) => {
-    axios.delete(process.env.REACT_APP_API_URL +`/package/delete/${idDelete}`)
+    axios.delete(process.env.REACT_APP_SERVER_URL+`/package/delete/${idDelete}`)
     .then(result => {
-      axios.get(process.env.REACT_APP_API_URL +`/package/${user._id}`)
+      axios.get(process.env.REACT_APP_SERVER_URL+`/package/${user._id}`)
       .then(result => {
         setpackagesData(result.data);
       })

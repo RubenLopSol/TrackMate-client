@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import axios from "axios"
 
 const packageContext = createContext();
 
@@ -7,6 +8,7 @@ function PackagesProviderWrapper(props) {
     
     const addDriverPackage = (pack) => {
         setDriverPackages([...driverPackages, pack])
+        axios.put(process.env.REACT_APP_SERVER_URL + `/package/${pack._id}/edit`, {isTransported: "In delivery"})
     }
 
     return(

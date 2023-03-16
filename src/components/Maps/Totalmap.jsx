@@ -3,7 +3,8 @@ import { useJsApiLoader, GoogleMap, Marker, InfoWindow } from '@react-google-map
 import { useState, useEffect, useContext } from 'react'
 import axios from "axios"
 import box from "./box.png"
-import {packageContext} from '../../context/packages.context'
+import "./Totalmap.css"
+import { packageContext } from '../../context/packages.context'
 
 const center = { lat: 41.392478, lng: 2.144170 }
 
@@ -12,13 +13,14 @@ function TotalMap() {
 
   const { addDriverPackage } = useContext(packageContext)
 
+  const [showMarkers, setShowMarkers] = useState(true);
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyB-bxisiqGND7MJCIQkaE7bbu2bjGSCC0g',
-    libraries: ['places'],
   })
 
   const [packages, setPackages] = useState([])
-
+  const { driverPackages } = useContext(packageContext)
   const image = box
 
   useEffect(() => {
@@ -26,17 +28,20 @@ function TotalMap() {
       .then((response) => {
         setPackages(response.data)
       })
-      .catch(err=>console.log(err))
+      .catch(err => console.log(err))
   }, [])
 
   if (!isLoaded) {
     return <p>Loading...</p>
+  } 
+
+ 
+  const addPackageHandler = (packId) => {
+    
+    addDriverPackage(packages.find((pack) => packId === pack._id))
   }
 
-  const addPackageHandler = (packId) => {
-    addDriverPackage(packages.find((pack)=> packId === pack._id ))
-  }
-  console.log("PAQUETES: ", packages)
+
   return (
     <>
       <Flex
@@ -46,7 +51,7 @@ function TotalMap() {
         h='100vh'
         w='100vw'
       >
-        <Box position='absolute' left={0} top={0} h='100%' w='100%'>
+        <Box position='absolute' left={70} top={70} h='150%' w='100%'>
 
           <GoogleMap
             center={center}
@@ -58,19 +63,22 @@ function TotalMap() {
             }}
           >
             {packages.map(pack => {
-            return (
-              <div key={pack._id}>
+              return (
+                <div key={pack._id}>
+                {showMarkers && ( 
                 <Marker position={pack.coordinates} icon={image}>
-                  <InfoWindow position={pack.coordinates} visble={true}>
+                  <InfoWindow position={pack.coordinates} visible={true}>
                     <div>
                       <p>{pack._id}</p>
                       <p>{pack.address}</p>
-                      <button onClick={()=> addPackageHandler(pack._id)}>Add route</button>
+                      <button onClick={() => addPackageHandler(pack._id)}>Add to route</button>
                     </div>
                   </InfoWindow>
                 </Marker>
-              </div>
-            )})}
+              )}
+                </div>
+              )
+            })}
 
           </GoogleMap>
         </Box>

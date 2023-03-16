@@ -29,16 +29,17 @@ function Tracking() {
     }
     const image = truck;
      useEffect(() => {
-        axios.get(process.env.REACT_APP_SERVER_URL + `/package/${idpackage}`)
+        axios.get(process.env.REACT_APP_SERVER_URL + `/package/pack/${idpackage}`)
         .then(result => {
-            console.log("DATOS PACKETE: ", result.data)
+            console.log("DATOS PACKETE: ", result.data.driverAssigned.driverCoordinates)
+            setCoordenadas(result.data.driverAssigned.driverCoordinates)
         })
         setIdentificador(setInterval(() => {
-            axios.get(process.env.REACT_APP_SERVER_URL + `/package/${idpackage}`)
+            axios.get(process.env.REACT_APP_SERVER_URL + `/package/pack/${idpackage}`)
                 .then(result => {
-                    console.log("DATOS PACKETE: ", result.data)
+                    console.log("DATOS PACKETE: ", result.data.driverAssigned.driverCoordinates)
+                    setCoordenadas(result.data.driverAssigned.driverCoordinates)
                 })
-                console.log("hola")
         }, 10000))
         return (
             clearInterval(identificador)

@@ -18,7 +18,7 @@ function Navigation () {
   })  */
 
   const [coordenadas, setCoordenadas] = useState({})
-    const [identificador, setIdentificador] = useState(null)
+   /*  const [identificador, setIdentificador] = useState(null)
     const location = function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position);
@@ -47,14 +47,14 @@ function Navigation () {
             clearInterval(identificador)
         )
     }, [])
-
+ */
   const { driverPackages } = useContext(packageContext)
 
   return(
     <div className='row'>
       <div className='col-sm-8'>
         <>
-            <button onClick={stop}>Stop</button>
+            {/* <button onClick={stop}>Stop</button> */}
             <Flex
                 position='relative'
                 flexDirection='column'

@@ -34,7 +34,7 @@ function TotalMap() {
   const addPackageHandler = (packId) => {
     addDriverPackage(packages.find((pack) => packId === pack._id))
     setShowMarkers((prevMarkers) => ({ ...prevMarkers, [packId]: false }));
-    axios.put(process.env.REACT_APP_SERVER_URL + `/package/${packId}/edit`, { driverAssigned: user._id })
+    axios.put(process.env.REACT_APP_SERVER_URL + `/package/${packId}/edit`, { driverAssigned: user._id, isTransported: "In delivery" })
   }
 
   return (

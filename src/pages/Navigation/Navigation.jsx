@@ -22,36 +22,40 @@ function Navigation () {
   const { driverPackages } = useContext(packageContext)
 
   const [coordenadas, setCoordenadas] = useState({})
-    const [identificador, setIdentificador] = useState(null)
-    const location = function () {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position);
-        }
-    }
-    const position = function (pos) {
-        setCoordenadas({
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude
-        });//driverCoordinates
-        axios.put(process.env.REACT_APP_SERVER_URL + `/user/edit/${user._id}`, { driverCoordinates: coordenadas })
-        console.log("pos", pos.coords)
-    }
-    const stop = () => {
-        clearInterval(identificador)
-        setIdentificador(null)
-    }
-    const image = truck;
-     useEffect(() => {
-        location();
-        setIdentificador(setInterval(() => {
-            location();
-            console.log("hola")
-        }, 10000))
-        return (
-            clearInterval(identificador)
-        )
-    }, [])
+  const [identificador, setIdentificador] = useState(null)
 
+  const location = function () {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(position);
+      }
+  }
+
+  const position = function (pos) {
+    setCoordenadas({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
+    });//driverCoordinates
+    axios.put(process.env.REACT_APP_SERVER_URL + `/user/edit/${user._id}`, { driverCoordinates: coordenadas })
+    .catch(err => console.log(err))
+  }
+
+  const stop = () => {
+      clearInterval(identificador)
+      setIdentificador(null)
+  }
+
+  const image = truck;
+
+  useEffect(() => {
+    location();
+    setIdentificador(setInterval(() => {
+        location();
+        console.log("hola")
+    }, 5000))
+    return (
+        clearInterval(identificador)
+    )
+  }, [])
 
   return(
     <div className='row'>

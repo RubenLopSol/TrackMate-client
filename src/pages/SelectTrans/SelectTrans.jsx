@@ -5,13 +5,14 @@ import { AuthContext } from "../../context/auth.context";
 import Navbar from "../../components/Navbar/Navbar";
 import SelectedPackages from "../../components/SelectedPackages/SelectedPackages"
 import { Link } from "react-router-dom";
+
 function SelectTrans() {
   const { user } = useContext(AuthContext)
   return (
     <>
       <Navbar />
       <div className="link">
-        <Link className="btn btn-primary mx-auto mt-3" to="/user/navigation" >Start navigation</Link>
+        <Link className="btn btn-primary mx-auto mt-3" to="/user/navigation">Start navigation</Link>
       </div>
               
       {user.isTransporter &&

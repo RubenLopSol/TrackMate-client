@@ -12,6 +12,7 @@ function TotalMap() {
   const [showMarkers, setShowMarkers] = useState({});
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyB-bxisiqGND7MJCIQkaE7bbu2bjGSCC0g',
+    libraries:["places"],
   })
   const [packages, setPackages] = useState([])
   const image = box

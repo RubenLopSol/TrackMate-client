@@ -1,12 +1,12 @@
 import { useContext } from 'react'
 import { packageContext } from "../../context/packages.context"
-import { Link } from "react-router-dom";
+
 
 function SelectedPackages() {
     const { driverPackages } = useContext(packageContext)
     return (
         <>
-        <h2 className="mb-2">Plan your day :)</h2>
+        <h2 className="mb-2">Your day :)</h2>
         <div>
         <table className="table mt-3">
                 <thead>

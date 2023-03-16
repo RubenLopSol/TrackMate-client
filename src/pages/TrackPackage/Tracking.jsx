@@ -21,8 +21,7 @@ function Tracking() {
             lat: pos.coords.latitude,
             lng: pos.coords.longitude
         });
-        console.log("pos", pos.coords)
-    } */
+    }
     const stop = () => {
         clearInterval(identificador)
         setIdentificador(null)

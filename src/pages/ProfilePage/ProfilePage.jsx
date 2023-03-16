@@ -1,4 +1,3 @@
-import "./ProfilePage.css";
 import React, { useContext } from "react"
 import { AuthContext } from "../../context/auth.context";
 import { useState, useEffect } from "react";
@@ -8,6 +7,7 @@ import Autocomplete from "../../components/Autocomplete/Autocomplete"
 import Navbar from "../../components/Navbar/Navbar";
 import SearchBar from "../../components/SearchBar/SearchBar"
 import Gif from "./giphy.gif"
+import TransportProfile from "../../components/TransportProfile/TransportProfile"
 
 function ProfilePage() {
   const [packagesData, setpackagesData] = useState([]);
@@ -61,10 +61,12 @@ function ProfilePage() {
     <>
       <Navbar />
       {!user.isTransporter && 
+
       <div className="row">
         <div className="col-sm-4">USER INFORMATION</div>
         <div className="col-sm-8">
-          <h2 className="mt-2"><SearchBar filter={filterHandler}/></h2>
+        <Link to={`/user/newPackage`}><button type="button" className="btn btn-primary m-5">New package</button></Link>
+          <h2 className="mt-2 me-2"><SearchBar filter={filterHandler}/></h2>
           <div className="row mx-auto">
             {filteredPack.map(data => {
               return (
@@ -98,8 +100,7 @@ function ProfilePage() {
                                     <button type="submit" className="btn btn-danger me-2" data-bs-dismiss="modal" onClick={()=> deleteHandler(data._id)}>Delete</button>
 
                                     <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Save</button>
-                                    
-                                    
+
                                     </div>
                                   </div>
                                 </form>
@@ -116,10 +117,10 @@ function ProfilePage() {
           })}
         </div>
       </div>
-      <Link to={`/user/newPackage`}><button type="button" className="btn btn-primary m-3">New package</button></Link>
+     
       </div>}
       {user.isTransporter && 
-      <p>Is transporter</p>}
+      <TransportProfile/>}
     </>
 
   )

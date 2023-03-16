@@ -1,16 +1,14 @@
 import axios from 'axios';
-import { AuthContext } from '../context/auth.context';
 
 class PackageService {
   constructor(token) {
       this.headerObject = {headers: {authorization: `Bearer ${token}`}}
   }
 
-  // GET /package/all
   getAllPackages = async () => {
     return axios.get(process.env.REACT_APP_API_URL + "/package/all");
   }
-  // GET /package/:userid
+
   getUserPackages = async (userid) => {
     return axios.get(process.env.REACT_APP_API_URL + `/package/${userid}`);
   }
@@ -31,8 +29,5 @@ class PackageService {
   }  */
 
 }
-
-// Create one instance of the service
-/* const packageService = new PackageService(); */
 
 export default PackageService;

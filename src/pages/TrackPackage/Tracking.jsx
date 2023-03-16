@@ -11,7 +11,7 @@ function Tracking() {
 
     const {idpackage} = useParams()
 
-   /*  const location = function () {
+     const location = function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position);
         }
@@ -21,8 +21,7 @@ function Tracking() {
             lat: pos.coords.latitude,
             lng: pos.coords.longitude
         });
-        console.log("pos", pos.coords)
-    } */
+    }
     const stop = () => {
         clearInterval(identificador)
         setIdentificador(null)

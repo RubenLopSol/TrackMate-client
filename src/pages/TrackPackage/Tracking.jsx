@@ -2,10 +2,16 @@ import { useState, useEffect } from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import truck from "./truck.png"
+import { useParams } from 'react-router-dom'
+import axios from 'axios'
+
 function Tracking() {
     const [coordenadas, setCoordenadas] = useState({})
     const [identificador, setIdentificador] = useState(null)
-    const location = function () {
+
+    const {idpackage} = useParams()
+
+   /*  const location = function () {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position);
         }
@@ -16,17 +22,24 @@ function Tracking() {
             lng: pos.coords.longitude
         });
         console.log("pos", pos.coords)
-    }
+    } */
     const stop = () => {
         clearInterval(identificador)
         setIdentificador(null)
     }
     const image = truck;
      useEffect(() => {
-        location();
+        axios.get(process.env.REACT_APP_SERVER_URL + `/package/pack/${idpackage}`)
+        .then(result => {
+            console.log("DATOS PACKETE: ", result.data.driverAssigned.driverCoordinates)
+            setCoordenadas(result.data.driverAssigned.driverCoordinates)
+        })
         setIdentificador(setInterval(() => {
-            location();
-            console.log("hola")
+            axios.get(process.env.REACT_APP_SERVER_URL + `/package/pack/${idpackage}`)
+                .then(result => {
+                    console.log("DATOS PACKETE: ", result.data.driverAssigned.driverCoordinates)
+                    setCoordenadas(result.data.driverAssigned.driverCoordinates)
+                })
         }, 10000))
         return (
             clearInterval(identificador)

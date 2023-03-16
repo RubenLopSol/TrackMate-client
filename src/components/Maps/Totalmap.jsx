@@ -4,11 +4,13 @@ import axios from "axios"
 import box from "./box.png"
 import { packageContext } from '../../context/packages.context'
 import { Box, Flex } from '@chakra-ui/react'
+import { AuthContext } from "../../context/auth.context";
 
 const center = { lat: 41.392478, lng: 2.144170 }
 
 function TotalMap() {
   const { addDriverPackage, deletePackages } = useContext(packageContext)
+  const { user } = useContext(AuthContext)
   const [showMarkers, setShowMarkers] = useState({});
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyB-bxisiqGND7MJCIQkaE7bbu2bjGSCC0g',
@@ -28,13 +30,12 @@ function TotalMap() {
   if (!isLoaded) {
     return <p>Loading...</p>
   } 
-
  
   const addPackageHandler = (packId) => {
     addDriverPackage(packages.find((pack) => packId === pack._id))
     setShowMarkers((prevMarkers) => ({ ...prevMarkers, [packId]: false }));
+    axios.put(process.env.REACT_APP_SERVER_URL + `/package/${packId}/edit`, { driverAssigned: user._id })
   }
-
 
   return (
     <>

@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useContext } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import camion from "./camion.png"
 import { packageContext } from '../../context/packages.context'
+import { AuthContext } from '../../context/auth.context'
 import SelectedPackages from "../../components/SelectedPackages/SelectedPackages"
 import truck from "./truck.png"
 import axios from 'axios'
@@ -12,10 +13,13 @@ const center = { lat: 41.392478,  lng: 2.144170}
 const image = camion;
 
 function Navigation () {
- /*  const { isLoaded } = useJsApiLoader({
+  /*  const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyB-bxisiqGND7MJCIQkaE7bbu2bjGSCC0g',
     libraries: ['places'],
   })  */
+
+  const { user } = useContext(AuthContext)
+  const { driverPackages } = useContext(packageContext)
 
   const [coordenadas, setCoordenadas] = useState({})
    /*  const [identificador, setIdentificador] = useState(null)
@@ -28,8 +32,8 @@ function Navigation () {
         setCoordenadas({
             lat: pos.coords.latitude,
             lng: pos.coords.longitude
-        });
-        
+        });//driverCoordinates
+        axios.put(process.env.REACT_APP_SERVER_URL + `/user/edit/${user._id}`, { driverCoordinates: coordenadas })
         console.log("pos", pos.coords)
     }
     const stop = () => {
@@ -47,8 +51,7 @@ function Navigation () {
             clearInterval(identificador)
         )
     }, [])
- */
-  const { driverPackages } = useContext(packageContext)
+
 
   return(
     <div className='row'>

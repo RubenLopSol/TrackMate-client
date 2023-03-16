@@ -9,6 +9,7 @@ import SearchBar from "../../components/SearchBar/SearchBar"
 import Gif from "./giphy.gif"
 import TransportProfile from "../../components/TransportProfile/TransportProfile"
 import packageService from "../../services/package.service";
+import UserInfo from "../../components/userInfo/userInfo";
 
 function ProfilePage() {
   const [packagesData, setpackagesData] = useState([]);
@@ -64,7 +65,7 @@ function ProfilePage() {
       {!user.isTransporter && 
 
       <div className="row">
-        <div className="col-sm-4">USER INFORMATION</div>
+        <div className="col-sm-4"><UserInfo/></div>
         <div className="col-sm-8">
         <Link to={`/user/newPackage`}><button type="button" className="btn btn-primary m-5">New package</button></Link>
           <h2 className="mt-2 me-2"><SearchBar filter={filterHandler}/></h2>

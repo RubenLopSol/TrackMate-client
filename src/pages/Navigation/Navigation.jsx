@@ -5,6 +5,7 @@ import axios from "axios"
 
 import { packageContext } from '../../context/packages.context'
 import { AuthContext } from '../../context/auth.context'
+import { AuthContext } from '../../context/auth.context'
 import SelectedPackages from "../../components/SelectedPackages/SelectedPackages"
 import {Link} from "react-router-dom"
 
@@ -15,7 +16,10 @@ function Navigation() {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyB-bxisiqGND7MJCIQkaE7bbu2bjGSCC0g',
     libraries: ['places'],
-  })
+  })  */
+
+  const { user } = useContext(AuthContext)
+  const { driverPackages } = useContext(packageContext)
 
 
   const [map, setMap] = useState((null))

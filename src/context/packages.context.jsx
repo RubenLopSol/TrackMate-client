@@ -5,8 +5,8 @@ function PackagesProviderWrapper(props) {
     const [driverPackages, setDriverPackages] = useState([]);
     const addDriverPackage = (pack) => {
         setDriverPackages([...driverPackages, pack])
-        axios.put(process.env.REACT_APP_SERVER_URL + `/package/${pack._id}/edit`, { isTransported: "In delivery" })
-            .then(result => console.log(result))
+        axios.put(process.env.REACT_APP_SERVER_URL + `/package/${pack._id}/edit`, {isTransported: "In delivery"})
+        .catch(err => console.log(err))
     }
     const deletePackages = () => {
         setDriverPackages([]);

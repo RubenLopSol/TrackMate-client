@@ -1,10 +1,11 @@
 import { useJsApiLoader, GoogleMap, Marker, InfoWindow } from '@react-google-maps/api'
 import { useState, useEffect, useContext } from 'react'
-import axios from "axios"
 import box from "./box.png"
 import { packageContext } from '../../context/packages.context'
 import { Box, Flex } from '@chakra-ui/react'
-import { AuthContext } from "../../context/auth.context";
+import packageService from "../../services/package.service";
+import axios from 'axios'
+import { AuthContext } from '../../context/auth.context'
 
 const center = { lat: 41.392478, lng: 2.144170 }
 
@@ -17,10 +18,13 @@ function TotalMap() {
     libraries:["places"],
   })
   const [packages, setPackages] = useState([])
+
+  const { user } = useContext(AuthContext)
+
   const image = box
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_SERVER_URL + `/package/all`)
+    packageService.getAllPackages()
       .then((response) => {
         setPackages(response.data);
         deletePackages();

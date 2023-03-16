@@ -6,6 +6,7 @@ import Autocomplete from "../../components/Autocomplete/Autocomplete"
 import Loading from "../../components/Loading/Loading";
 import { AuthContext } from "../../context/auth.context";
 import Navbar from "../../components/Navbar/Navbar";
+import packageService from "../../services/package.service";
 
 function NewPackage() {
   const [title, setTitle] = useState("");
@@ -43,15 +44,15 @@ function NewPackage() {
       return;
     }
     setIsLoading(true);
-    axios.post(process.env.REACT_APP_SERVER_URL + "/package/new", { title, description, size, address: addressInput, coordinates, creator: user._id })
-      .then(result => {
-        setIsLoading(false)
-        navigate(`/profile`);
-      })
-      .catch(err => {
-        setIsLoading(false);
-        console.log(err)
-      })
+    packageService.createOne({ title, description, size, address: addressInput, coordinates, creator: user._id})
+    .then(result => {
+      setIsLoading(false)
+      navigate(`/profile`);
+    })
+    .catch(err => {
+      setIsLoading(false);
+      console.log(err)
+    })
   }
   if (isLoading) {
     return <Loading />

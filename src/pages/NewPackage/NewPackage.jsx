@@ -6,6 +6,7 @@ import Autocomplete from "../../components/Autocomplete/Autocomplete"
 import Loading from "../../components/Loading/Loading";
 import { AuthContext } from "../../context/auth.context";
 import Navbar from "../../components/Navbar/Navbar";
+import packageService from "../../services/package.service";
 
 function NewPackage() {
   const [title, setTitle] = useState("");
@@ -15,10 +16,10 @@ function NewPackage() {
   const [coordinates, setCoordinates] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(undefined);
-  
+
   const { user } = useContext(AuthContext);
 
-  const navigate= useNavigate();
+  const navigate = useNavigate();
 
   const getAdressHandler = (latLng, address) => {
     setCoordinates(latLng);
@@ -26,24 +27,24 @@ function NewPackage() {
   }
   const submitHandler = (e) => {
     e.preventDefault();
-    if(title === "") {
+    if (title === "") {
       setErrorMessage("please introduce Title")
       return;
     }
-    if(description === "") {
+    if (description === "") {
       setErrorMessage("please introduce Description")
       return;
     }
-    if(addressInput === "") {
+    if (addressInput === "") {
       setErrorMessage("please introduce Address")
       return;
     }
-    if(size === "") {
+    if (size === "") {
       setErrorMessage("please introduce Size")
       return;
     }
     setIsLoading(true);
-    axios.post(process.env.REACT_APP_SERVER_URL + "/package/new", { title, description, size, address: addressInput, coordinates, creator: user._id})
+    packageService.createOne({ title, description, size, address: addressInput, coordinates, creator: user._id})
     .then(result => {
       setIsLoading(false)
       navigate(`/profile`);
@@ -53,8 +54,8 @@ function NewPackage() {
       console.log(err)
     })
   }
-  if(isLoading) {
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />
   }
   return (
     <>
@@ -70,8 +71,8 @@ function NewPackage() {
             <input type="text" className="form-control" id="exampleInputDescription" placeholder="some description ..." value={description} onChange={(e) => setDescription(e.target.value)} />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputAddress" className="form-label">Address</label>
-            <Autocomplete getAdressHandler={getAdressHandler}/>
+            <label htmlFor="exampleInputAddress" className="form-label">Delivery address</label>
+            <Autocomplete getAdressHandler={getAdressHandler} />
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputSize" className="form-label">Size</label>

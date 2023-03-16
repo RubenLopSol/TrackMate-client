@@ -1,4 +1,3 @@
-import "./NotFoundPage.css";
 import notFound from "./notFound.gif"
 
 function NotFoundPage() {

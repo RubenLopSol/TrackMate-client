@@ -38,7 +38,7 @@ export function LocationSearchInput({getAdressHandler}) {
               const className = suggestion.active
                 ? 'suggestion-item--active'
                 : 'suggestion-item';
-              // inline style for demonstration purpose
+              
               const style = suggestion.active
                 ? { backgroundColor: '#FAFAFA', cursor: 'pointer' }
                 : { backgroundColor: '#FFFFFF', cursor: 'pointer' };

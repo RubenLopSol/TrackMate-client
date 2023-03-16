@@ -1,42 +1,45 @@
-import { Box, Flex } from '@chakra-ui/react'
 import { useJsApiLoader, GoogleMap, Marker, InfoWindow } from '@react-google-maps/api'
 import { useState, useEffect, useContext } from 'react'
-import axios from "axios"
 import box from "./box.png"
-import {packageContext} from '../../context/packages.context'
+import { packageContext } from '../../context/packages.context'
+import { Box, Flex } from '@chakra-ui/react'
+import packageService from "../../services/package.service";
+import axios from 'axios'
+import { AuthContext } from '../../context/auth.context'
 
 const center = { lat: 41.392478, lng: 2.144170 }
 
-
 function TotalMap() {
-
-  const { addDriverPackage } = useContext(packageContext)
-
+  const { addDriverPackage, deletePackages } = useContext(packageContext)
+  const { user } = useContext(AuthContext)
+  const [showMarkers, setShowMarkers] = useState({});
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyB-bxisiqGND7MJCIQkaE7bbu2bjGSCC0g',
-    libraries: ['places'],
+    libraries:["places"],
   })
-
   const [packages, setPackages] = useState([])
 
   const image = box
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_SERVER_URL + `/package/all`)
+    packageService.getAllPackages()
       .then((response) => {
-        setPackages(response.data)
+        setPackages(response.data);
+        deletePackages();
       })
-      .catch(err=>console.log(err))
+      .catch(err => console.log(err))
   }, [])
 
   if (!isLoaded) {
     return <p>Loading...</p>
+  } 
+ 
+  const addPackageHandler = (packId) => {
+    addDriverPackage(packages.find((pack) => packId === pack._id))
+    setShowMarkers((prevMarkers) => ({ ...prevMarkers, [packId]: false }));
+    axios.put(process.env.REACT_APP_SERVER_URL + `/package/${packId}/edit`, { driverAssigned: user._id, isTransported: "In delivery" })
   }
 
-  const addPackageHandler = (packId) => {
-    addDriverPackage(packages.find((pack)=> packId === pack._id ))
-  }
-  console.log("PAQUETES: ", packages)
   return (
     <>
       <Flex
@@ -46,8 +49,7 @@ function TotalMap() {
         h='100vh'
         w='100vw'
       >
-        <Box position='absolute' left={0} top={0} h='100%' w='100%'>
-
+        <Box position='absolute' left={70} top={70} h='150%' w='100%'>
           <GoogleMap
             center={center}
             zoom={15}
@@ -58,31 +60,26 @@ function TotalMap() {
             }}
           >
             {packages.map(pack => {
-            return (
-              <div key={pack._id}>
+              return (
+                <div key={pack._id}>
+                {showMarkers[pack._id] !== false && (
                 <Marker position={pack.coordinates} icon={image}>
-                  <InfoWindow position={pack.coordinates} visble={true}>
+                  <InfoWindow position={pack.coordinates} >
                     <div>
                       <p>{pack._id}</p>
                       <p>{pack.address}</p>
-                      <button onClick={()=> addPackageHandler(pack._id)}>Add route</button>
+                      <button onClick={() => addPackageHandler(pack._id)}>Add to route</button>
                     </div>
                   </InfoWindow>
                 </Marker>
-              </div>
-            )})}
-
+              )}
+                </div>
+              )
+            })}
           </GoogleMap>
         </Box>
-
       </Flex>
-
     </>
-
   )
 }
-
 export default TotalMap;
-
-
-

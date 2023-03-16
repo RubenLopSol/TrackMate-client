@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { AuthContext } from '../context/auth.context';
 
 class PackageService {
   constructor(token) {
@@ -7,32 +6,36 @@ class PackageService {
   }
 
   // GET /package/all
-  getAllPackages = async () => {
+  getAllPackages = () => {
     return axios.get(process.env.REACT_APP_SERVER_URL + "/package/all");
   }
-  // GET /package/:userid
-  getUserPackages = async (userid) => {
-    return axios.get(process.env.REACT_APP_SERVER_URL + `/package/${userid}`);
+  // GET /package/:idPackage
+  getPackage = (idPackage) => {
+    return axios.get(process.env.REACT_APP_SERVER_URL + `/package/${idPackage}`);
   }
 
-  /* // POST /api/examples
-  createOne = async (requestBody) => {
-    return this.api.post('/new', requestBody);
+  // GET /package/:idUser
+  getUserPackages = (idUser) => {
+    return axios.get(process.env.REACT_APP_SERVER_URL + `/package/${idUser}`);
   }
 
-  // PUT /api/examples/:id
-  updateOne = async (packageId, requestBody) => {
-    return this.api.put(`/edit/${packageId}`, requestBody);
+  // POST /package/new
+  createOne = (requestBody) => {
+    return axios.post(process.env.REACT_APP_SERVER_URL + '/package/new', requestBody);
   }
 
-  // DELETE /api/examples/:id
-  deleteProject = async (packageId) => {
-    return this.api.delete(`/delete/${packageId}`);
-  }  */
+  // PUT /package/:idPackage/edit
+  updateOne = (packageId, requestBody) => {
+    return axios.put(process.env.REACT_APP_SERVER_URL + `/package/${packageId}/edit`, requestBody);
+  }
+
+  // DELETE /package/delete/:idPackage
+  deletePackage = (packageId) => {
+    return axios.delete(process.env.REACT_APP_SERVER_URL + `/package/delete/${packageId}`);
+  } 
 
 }
 
-// Create one instance of the service
-/* const packageService = new PackageService(); */
+const packageService = new PackageService();
 
-export default PackageService;
+export default packageService;

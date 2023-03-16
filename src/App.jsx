@@ -10,7 +10,6 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import Index from "./pages/index"
 import Navigation from "./pages/Navigation/Navigation"
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage"
-import Navbar from "./components/Navbar/Navbar";
 import IsPrivate from "./components/IsPrivate/IsPrivate";
 import IsAnon from "./components/IsAnon/IsAnon";
 
@@ -68,7 +67,7 @@ function App() {
           }
         />
         <Route
-          path="/user/tracking"
+          path="/user/tracking/:idpackage"
           element={
             <IsPrivate>
               <Tracking />

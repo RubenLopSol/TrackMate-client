@@ -8,6 +8,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import SearchBar from "../../components/SearchBar/SearchBar"
 import Gif from "./giphy.gif"
 import TransportProfile from "../../components/TransportProfile/TransportProfile"
+import packageService from "../../services/package.service";
 
 function ProfilePage() {
   const [packagesData, setpackagesData] = useState([]);

@@ -19,8 +19,6 @@ function TotalMap() {
   })
   const [packages, setPackages] = useState([])
 
-  const { user } = useContext(AuthContext)
-
   const image = box
 
   useEffect(() => {

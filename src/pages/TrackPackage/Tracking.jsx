@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Box, Flex } from '@chakra-ui/react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import truck from "./truck.png"

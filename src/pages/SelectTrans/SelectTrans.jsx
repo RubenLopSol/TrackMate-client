@@ -10,7 +10,10 @@ function SelectTrans() {
   return (
     <>
       <Navbar />
-      <Link to={"/user/navigation"}>Navigation</Link>
+      <div className="link">
+        <Link className="btn btn-primary mx-auto mt-3" to="/user/navigation" >Start navigation</Link>
+      </div>
+              
       {user.isTransporter &&
         <>
           <div className="row">
@@ -21,6 +24,7 @@ function SelectTrans() {
               <SelectedPackages />
             </div>
           </div>
+
         </>
       }
           

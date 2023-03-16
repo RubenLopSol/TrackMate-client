@@ -78,8 +78,7 @@ function ProfilePage() {
                       <h5 className="card-title">Tracking number: {data._id}</h5>
                       <p className="card-text">Address: {data.address}</p>
                       <p className="card-text">State: {data.isTransported}</p>
-                      <button type="button" className="btn btn-primary m-2" onClick={()=> setIdPackage(data._id)} data-bs-toggle="modal" data-bs-target="#exampleModal">Edit adress</button>
-                      
+                      {data.isTransported === "Pending" && <button type="button" className="btn btn-primary m-2" onClick={()=> setIdPackage(data._id)} data-bs-toggle="modal" data-bs-target="#exampleModal">Edit adress</button>}
                       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                           <div className="modal-content">

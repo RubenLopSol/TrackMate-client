@@ -27,14 +27,15 @@ function TotalMap() {
 
   if (!isLoaded) {
     return <p>Loading...</p>
-  }
+  } 
 
+ 
   const addPackageHandler = (packId) => {
     addDriverPackage(packages.find((pack) => packId === pack._id))
     setShowMarkers((prevMarkers) => ({ ...prevMarkers, [packId]: false }));
   }
 
-console.log("paquetes:", packages)
+
   return (
     <>
       <Flex

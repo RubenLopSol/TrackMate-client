@@ -15,18 +15,16 @@ function Tracking() {
             lat: pos.coords.latitude,
             lng: pos.coords.longitude
         });
-        console.log("pos", pos.coords)
     }
     const stop = () => {
         clearInterval(identificador)
         setIdentificador(null)
     }
     const image = truck;
-     useEffect(() => {
+    useEffect(() => {
         location();
         setIdentificador(setInterval(() => {
             location();
-            console.log("hola")
         }, 10000))
         return (
             clearInterval(identificador)

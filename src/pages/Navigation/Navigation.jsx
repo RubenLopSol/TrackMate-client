@@ -1,14 +1,14 @@
-import { Box, Button, ButtonGroup, Flex, IconButton, Input, Text } from '@chakra-ui/react'
-import { useJsApiLoader, GoogleMap, Marker, Autocomplete, DirectionsRenderer } from '@react-google-maps/api'
-import { useRef, useState, useContext } from 'react'
-import Navbar from '../../components/Navbar/Navbar'
-import camion from "./camion.png"
+import { Box, Button, ButtonGroup, Flex } from '@chakra-ui/react'
+import { useJsApiLoader, GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api'
+import { useState, useContext } from 'react'
+import axios from "axios"
+
 import { packageContext } from '../../context/packages.context'
 import SelectedPackages from "../../components/SelectedPackages/SelectedPackages"
+import {Link} from "react-router-dom"
 
 
 const center = { lat: 41.392478, lng: 2.144170 }
-const image = camion;
 
 function Navigation() {
   const { isLoaded } = useJsApiLoader({
@@ -19,48 +19,15 @@ function Navigation() {
 
   const [map, setMap] = useState((null))
   const [directionsResponse, setDirectionsResponse] = useState(null)
-  const [distance, setDistance] = useState('')
-  const [duration, setDuration] = useState('')
   const { driverPackages } = useContext(packageContext)
+  
 
   const originRef = { lat: 41.392478, lng: 2.144170 }
   const waypointsRef = [{ lat: driverPackages[0].coordinates.lat, lng: driverPackages[0].coordinates.lng }]
   const destinationRef = { lat: 41.392478, lng: 2.144170  }
-  console.log("waypoints", waypointsRef)
-
-  console.log("driverPackagesNavigation", driverPackages)
 
 
-  /*  const [identificador, setIdentificador] = useState(null)
-   const location = function () {
-       if (navigator.geolocation) {
-           navigator.geolocation.getCurrentPosition(position);
-       }
-   }
-   const position = function (pos) {
-       setCoordenadas({
-           lat: pos.coords.latitude,
-           lng: pos.coords.longitude
-       });
-       
-       console.log("pos", pos.coords)
-   }
-   const stop = () => {
-       clearInterval(identificador)
-       setIdentificador(null)
-   }
-   const image = truck;
-    useEffect(() => {
-       location();
-       setIdentificador(setInterval(() => {
-           location();
-           console.log("hola")
-       }, 10000))
-       return (
-           clearInterval(identificador)
-       )
-   }, [])
-*/
+
 async function calculateRoute() {
         // eslint-disable-next-line no-undef
   const directionsService = new google.maps.DirectionsService();
@@ -85,10 +52,18 @@ async function calculateRoute() {
   setDirectionsResponse(results);
 }
 
-
-
+const clickHandler = (pack) => {
+  axios.put(process.env.REACT_APP_SERVER_URL + `/package/${pack._id}/edit`, {isTransported: "Delivered"})
+        .then(result => console.log(driverPackages))
+}
 
   return (
+    <>
+    <div>
+    <Link className="mt-5 btn btn-primary" to ="/profile" onClick={clickHandler}>Finish your day!</Link>
+    </div>
+    <div className="row">
+    <div className="col-sm-7 mt-5 ms-5">
     <Flex
       position='relative'
       flexDirection='column'
@@ -96,7 +71,7 @@ async function calculateRoute() {
       h='100vh'
       w='100vw'
     >
-      <Box position='absolute' left={0} top={0} h='100%' w='100%'>
+      <Box position='absolute' left={0} top={0} h='150%' w='100%'>
 
         <GoogleMap
           center={center}
@@ -118,7 +93,7 @@ async function calculateRoute() {
             <DirectionsRenderer directions={directionsResponse} />
           )}
         </GoogleMap>
-        <SelectedPackages/>
+        
       </Box>
       <Box
         p={4}
@@ -129,7 +104,14 @@ async function calculateRoute() {
         minW='container.md'
         zIndex='1'
       >
-        <div spacing={2}>        
+
+      </Box>
+      
+    </Flex>
+    </div>
+    <div className="col-sm-4 me-2 mt-5">
+    <SelectedPackages />
+    <div spacing={2}>        
 
           <ButtonGroup>
             <Button type='submit' onClick={calculateRoute}>
@@ -137,9 +119,12 @@ async function calculateRoute() {
             </Button>
           </ButtonGroup>
         </div>
+    </div>
+    </div>
 
-      </Box>
-    </Flex>
+ 
+    </>
+    
   )
 }
 

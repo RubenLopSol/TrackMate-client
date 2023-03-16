@@ -24,11 +24,11 @@ class UserService{
     }
 
     // Client to server to take the avator for specific user with its id 
-    // avatarFromDB= async(idUser)=>{
-    //     return axios.post(process.env.REACT_APP_SERVER_URL+ `/user/avatar/${idUser}`, this.headerObject)
-    //     .then (res => res.data)
-    //     .catch((err)=>console.log(err))
-    //     }
+    avatarFromDB= async(idUser)=>{
+        return axios.post(process.env.REACT_APP_SERVER_URL+ `/user/avatar/${idUser}`, this.headerObject)
+        .then (res => res.data)
+        .catch((err)=>console.log(err))
+        }
 
 }
 

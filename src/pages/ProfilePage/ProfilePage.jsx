@@ -8,14 +8,12 @@ import Autocomplete from "../../components/Autocomplete/Autocomplete"
 import Navbar from "../../components/Navbar/Navbar";
 import SearchBar from "../../components/SearchBar/SearchBar"
 import Gif from "./giphy.gif"
+import packageService from "../../services/package.service";
 
 function ProfilePage() {
   const [packagesData, setpackagesData] = useState([]);
   const [coordinates, setCoordinates] = useState({});
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [addressInput, setAddress] = useState("");
-  const [size, setSize] = useState("");
   const [idPackage, setIdPackage] = useState(null);
   const [filteredPack, setFiltered] = useState([])
 
@@ -31,7 +29,7 @@ function ProfilePage() {
   }
 
   const getAllPackages = () => {
-    axios.get(process.env.REACT_APP_SERVER_URL + `/package/${user._id}`)
+    packageService.getUserPackages(user._id)
     .then(result => {
       setpackagesData(result.data);
       setFiltered(result.data);
@@ -41,7 +39,7 @@ function ProfilePage() {
 
   const submitEditHandler = (e) => {
     e.preventDefault();
-    axios.put(process.env.REACT_APP_SERVER_URL + `/package/${idPackage}/edit`, { address: addressInput, coordinates})
+    packageService.updateOne(idPackage, { address: addressInput, coordinates})
     .then(result => {
       getAllPackages();
     })
@@ -53,7 +51,7 @@ function ProfilePage() {
   }, [])
 
   const deleteHandler = (idDelete) => {
-    axios.delete(process.env.REACT_APP_SERVER_URL + `/package/delete/${idDelete}`)
+    packageService.deletePackage(idDelete)
     .then(result => {
       getAllPackages();
     })
@@ -78,8 +76,8 @@ function ProfilePage() {
                       <h5 className="card-title">Tracking number: {data._id}</h5>
                       <p className="card-text">Address: {data.address}</p>
                       <p className="card-text">State: {data.isTransported}</p>
-                      <button type="button" className="btn btn-primary m-2" onClick={()=> setIdPackage(data._id)} data-bs-toggle="modal" data-bs-target="#exampleModal">Edit adress</button>
-                      
+                      {data.isTransported === "Pending" && <button type="button" className="btn btn-primary m-2" onClick={()=> setIdPackage(data._id)} data-bs-toggle="modal" data-bs-target="#exampleModal">Edit adress</button>}
+                      {data.isTransported === "In delivery" && <Link className="btn btn-primary m-2" to={`/user/tracking/${data._id}`}>Tracking</Link>}
                       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                           <div className="modal-content">

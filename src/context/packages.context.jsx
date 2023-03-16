@@ -9,12 +9,11 @@ function PackagesProviderWrapper(props) {
     const addDriverPackage = (pack) => {
         setDriverPackages([...driverPackages, pack])
         axios.put(process.env.REACT_APP_SERVER_URL + `/package/${pack._id}/edit`, {isTransported: "In delivery"})
-        .then(result => console.log("AddDriverPackages: ",driverPackages))
+        .catch(err => console.log(err))
     }
 
     const deletePackages = () => {
         setDriverPackages([]);
-        console.log("DriverPackages: ", driverPackages)
     }
 
     return(

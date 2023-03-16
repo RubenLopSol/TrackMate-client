@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, useContext } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import camion from "./camion.png"
 import { packageContext } from '../../context/packages.context'
+import { AuthContext } from '../../context/auth.context'
 import SelectedPackages from "../../components/SelectedPackages/SelectedPackages"
 import truck from "./truck.png"
 import axios from 'axios'
@@ -12,43 +13,50 @@ const center = { lat: 41.392478,  lng: 2.144170}
 const image = camion;
 
 function Navigation () {
- /*  const { isLoaded } = useJsApiLoader({
+  /*  const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyB-bxisiqGND7MJCIQkaE7bbu2bjGSCC0g',
     libraries: ['places'],
   })  */
 
-  const [coordenadas, setCoordenadas] = useState({})
-    const [identificador, setIdentificador] = useState(null)
-    const location = function () {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position);
-        }
-    }
-    const position = function (pos) {
-        setCoordenadas({
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude
-        });
-        
-        console.log("pos", pos.coords)
-    }
-    const stop = () => {
-        clearInterval(identificador)
-        setIdentificador(null)
-    }
-    const image = truck;
-     useEffect(() => {
-        location();
-        setIdentificador(setInterval(() => {
-            location();
-            console.log("hola")
-        }, 10000))
-        return (
-            clearInterval(identificador)
-        )
-    }, [])
-
+  const { user } = useContext(AuthContext)
   const { driverPackages } = useContext(packageContext)
+
+  const [coordenadas, setCoordenadas] = useState({})
+  const [identificador, setIdentificador] = useState(null)
+
+  const location = function () {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(position);
+      }
+  }
+
+  const position = function (pos) {
+    setCoordenadas({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
+    })
+    console.log(coordenadas)
+    axios.put(process.env.REACT_APP_SERVER_URL + `/user/edit/${user._id}`, { driverCoordinates: coordenadas })
+    .then(result => {})
+    .catch(err => console.log(err))
+  }
+
+  const stop = () => {
+      clearInterval(identificador)
+      setIdentificador(null)
+  }
+
+  const image = truck;
+
+  useEffect(() => {
+    location();
+    setIdentificador(setInterval(() => {
+        location();
+    }, 5000))
+    return (
+        clearInterval(identificador)
+    )
+  }, [])
 
   return(
     <div className='row'>
@@ -181,7 +189,7 @@ function Navigation () {
       <Box position='absolute' left={0} top={0} h='100%' w='100%'>
      
         <GoogleMap
-          center={coordenadas}
+          center={center}
           zoom={40}
           mapContainerStyle={{ width: '50%', height: '50%' }}
           options={{

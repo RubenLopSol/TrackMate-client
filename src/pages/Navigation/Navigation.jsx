@@ -1,10 +1,9 @@
 import { Box, Button, ButtonGroup, Flex } from '@chakra-ui/react'
 import { useJsApiLoader, GoogleMap, Marker, DirectionsRenderer } from '@react-google-maps/api'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import axios from "axios"
 
 import { packageContext } from '../../context/packages.context'
-import { AuthContext } from '../../context/auth.context'
 import { AuthContext } from '../../context/auth.context'
 import SelectedPackages from "../../components/SelectedPackages/SelectedPackages"
 import {Link} from "react-router-dom"
@@ -16,111 +15,69 @@ function Navigation() {
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: 'AIzaSyB-bxisiqGND7MJCIQkaE7bbu2bjGSCC0g',
     libraries: ['places'],
-  })  */
-
-  const { user } = useContext(AuthContext)
-  const { driverPackages } = useContext(packageContext)
+  })
 
 
   const [map, setMap] = useState((null))
   const [directionsResponse, setDirectionsResponse] = useState(null)
   const { driverPackages } = useContext(packageContext)
-  
+  const { user } = useContext(AuthContext)
 
-  const originRef = { lat: 41.392478, lng: 2.144170 }
-  const waypointsRef = [{ lat: driverPackages[0].coordinates.lat, lng: driverPackages[0].coordinates.lng }]
-  const destinationRef = { lat: 41.392478, lng: 2.144170  }
-
-
-  return(
-    <div className='row'>
-      <div className='col-sm-8'>
-        <>
-            <button onClick={stop}>Stop</button>
-            <Flex
-                position='relative'
-                flexDirection='column'
-                alignItems='center'
-                h='100vh'
-                w='100vw'
-            >
-                <Box position='absolute' left={0} top={0} h='100%' w='100%'>
-                    <GoogleMap
-                        center={coordenadas}
-                        zoom={15}
-                        mapContainerStyle={{ width: '50%', height: '50%' }}
-                        options={{
-                            zoomControl: true,
-                            mapTypeControl: true,
-                        }}
-                    >
-                        <Marker position={coordenadas} icon={image} />
-                    </GoogleMap>
-                </Box>
-            </Flex>
-        </>
-      </div>
-      <div className='col-sm-4'>
-        <SelectedPackages />
-      </div>
-    </div>
-  )
-  /* const [map, setMap] = useState((null))
-  const [directionsResponse, setDirectionsResponse] = useState(null)
-  const [distance, setDistance] = useState('')
-  const [duration, setDuration] = useState('')
-  const [position, setPosition] = useState()
   const [coordenadas, setCoordenadas] = useState({})
   const [identificador, setIdentificador] = useState(null)
+
   const location = function () {
       if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
+          navigator.geolocation.getCurrentPosition(position);
       }
   }
-  const showPosition = function (pos) {
-      setCoordenadas({
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude
-      });
-      console.log("pos", pos.coords)
-  }
-  const stop = () => {
-      clearInterval(identificador)
-      setIdentificador(null)
+
+  const position = function (pos) {
+    setCoordenadas({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
+    })
   }
 
-  const originRef = useRef()
-  const waypointsRef = useRef()
-  const destinationRef = useRef()
-  console.log("waypoints", waypointsRef)
-  console.log("origen", originRef) */
-  
- /*  if (!isLoaded) {
-    return <p>Loading...</p>
-  } */
-
-   /*     useEffect(() => {
+  useEffect(() => {
+    location();
+    setIdentificador(setInterval(() => {
         location();
-        setIdentificador(setInterval(() => {
-            location();
-            console.log("hola")
-        }, 10000))
-        return (
-            clearInterval(identificador)
-        )
-    }, []) */
+        
+        
+    }, 5000))
+    return (
+        clearInterval(identificador)
+        
+    )
+  }, [])
+  console.log("COORDENADAS: ", coordenadas)
+  axios.put(process.env.REACT_APP_SERVER_URL + `/user/edit/${user._id}`, { driverCoordinates: coordenadas })
+        .then(result => console.log(result))
+        .catch(err => console.log(err))
+/*   const originRef = { lat: 41.392478, lng: 2.144170 }
+  const waypointsRef = [{ lat: driverPackages[0].coordinates.lat, lng: driverPackages[0].coordinates.lng }]
+  const destinationRef = { lat: 41.392478, lng: 2.144170  } */
 
- /*  async function calculateRoute() {
-    if (originRef.current.value === ''|| destinationRef.current.value === '') {
-      return
-    }
-    // eslint-disable-next-line no-undef
-    const directionsService = new google.maps.DirectionsService()
-    
-    const results = await directionsService.route({
-      origin: originRef.current.value,
-      waypoints: [
-        {
+
+
+async function calculateRoute() {
+        // eslint-disable-next-line no-undef
+  const directionsService = new google.maps.DirectionsService();
+
+  const waypoints = driverPackages.map((pack) => {
+    return {
+      location: {
+        lat: pack.coordinates.lat,
+        lng: pack.coordinates.lng,
+      },
+    };
+  });
+
+  const results = await directionsService.route({
+    origin: { lat: 41.392478, lng: 2.144170 },
+    waypoints: waypoints,
+    destination: { lat: 41.392478, lng: 2.144170 },
           // eslint-disable-next-line no-undef
     travelMode: google.maps.TravelMode.DRIVING,
   });
@@ -128,10 +85,18 @@ function Navigation() {
   setDirectionsResponse(results);
 }
 
-const clickHandler = (pack) => {
-  axios.put(process.env.REACT_APP_SERVER_URL + `/package/${pack._id}/edit`, {isTransported: "Delivered"})
-        .then(result => console.log(driverPackages))
-}
+const clickHandler = () => {
+  clearInterval(identificador)
+  driverPackages.forEach((pack) => {
+    axios.put(process.env.REACT_APP_SERVER_URL + `/package/${pack._id}/edit`, {isTransported: "Delivered"})
+      .then((result) => {
+        /* console.log("result", result); */
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  })
+};
 
   return (
     <>
@@ -205,6 +170,3 @@ const clickHandler = (pack) => {
 }
 
 export default Navigation;
-
-
-

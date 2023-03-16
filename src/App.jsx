@@ -22,7 +22,7 @@ function App() {
           path="/"
           element={
             <IsAnon>
-              <Index />
+              <HomePage />
             </IsAnon>
           }
         />

@@ -68,7 +68,7 @@ function App() {
           }
         />
         <Route
-          path="/user/tracking"
+          path="/user/tracking/:idpackage"
           element={
             <IsPrivate>
               <Tracking />

@@ -12,10 +12,7 @@ import Gif from "./giphy.gif"
 function ProfilePage() {
   const [packagesData, setpackagesData] = useState([]);
   const [coordinates, setCoordinates] = useState({});
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [addressInput, setAddress] = useState("");
-  const [size, setSize] = useState("");
   const [idPackage, setIdPackage] = useState(null);
   const [filteredPack, setFiltered] = useState([])
 
@@ -79,6 +76,7 @@ function ProfilePage() {
                       <p className="card-text">Address: {data.address}</p>
                       <p className="card-text">State: {data.isTransported}</p>
                       {data.isTransported === "Pending" && <button type="button" className="btn btn-primary m-2" onClick={()=> setIdPackage(data._id)} data-bs-toggle="modal" data-bs-target="#exampleModal">Edit adress</button>}
+                      {data.isTransported === "In delivery" && <Link to={`/user/traking/${data._id}`}>Tracking</Link>}
                       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                           <div className="modal-content">
@@ -86,6 +84,7 @@ function ProfilePage() {
                               <h1 className="modal-title fs-5" id="exampleModalLabel">Edit adress</h1>
                               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
+                            {/* Formulario para editar packete */}
                             <div className="modal-body">
                               <div className="w-50 mx-auto">
                                 <form onSubmit={submitEditHandler}>

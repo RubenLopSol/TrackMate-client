@@ -7,16 +7,16 @@ class PackageService {
 
   // GET /package/all
   getAllPackages = () => {
-    return axios.get(process.env.REACT_APP_SERVER_URL + "/package/all");
+    return axios.get(process.env.REACT_APP_SERVER_URL + "/package/all", this.headerObject);
   }
   // GET /package/:idPackage
   getPackage = (idPackage) => {
-    return axios.get(process.env.REACT_APP_SERVER_URL + `/package/${idPackage}`);
+    return axios.get(process.env.REACT_APP_SERVER_URL + `/package/${idPackage}`, this.headerObject);
   }
 
   // GET /package/:idUser
   getUserPackages = (idUser) => {
-    return axios.get(process.env.REACT_APP_SERVER_URL + `/package/${idUser}`);
+    return axios.get(process.env.REACT_APP_SERVER_URL + `/package/${idUser}`, this.headerObject);
   }
 
   // POST /package/new
@@ -26,12 +26,12 @@ class PackageService {
 
   // PUT /package/:idPackage/edit
   updateOne = (packageId, requestBody) => {
-    return axios.put(process.env.REACT_APP_SERVER_URL + `/package/${packageId}/edit`, requestBody);
+    return axios.put(process.env.REACT_APP_SERVER_URL + `/package/${packageId}/edit`, requestBody, this.headerObject);
   }
 
   // DELETE /package/delete/:idPackage
   deletePackage = (packageId) => {
-    return axios.delete(process.env.REACT_APP_SERVER_URL + `/package/delete/${packageId}`);
+    return axios.delete(process.env.REACT_APP_SERVER_URL + `/package/delete/${packageId}`, this.headerObject);
   } 
 
 }

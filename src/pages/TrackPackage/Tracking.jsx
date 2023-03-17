@@ -3,51 +3,41 @@ import { Box, Flex } from '@chakra-ui/react'
 import { GoogleMap, Marker } from '@react-google-maps/api'
 import truck from "./truck.png"
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 function Tracking() {
     const [coordenadas, setCoordenadas] = useState({})
     const [identificador, setIdentificador] = useState(null)
     const {idpackage} = useParams()
+    const navigate = useNavigate();
 
-    /*  const location = function () {
-         if (navigator.geolocation) {
-             navigator.geolocation.getCurrentPosition(position);
-         }
-     }
-     const position = function (pos) {
-         setCoordenadas({
-             lat: pos.coords.latitude,
-             lng: pos.coords.longitude
-         });
-         console.log("pos", pos.coords)
-     } */
-     const stop = () => {
+    const stop = () => {
          clearInterval(identificador)
          setIdentificador(null)
-     }
-     const image = truck;
-      useEffect(() => {
-         axios.get(process.env.REACT_APP_SERVER_URL + `/package/pack/${idpackage}`)
-         .then(result => {
-             console.log("DATOS PACKETE: ", result.data.driverAssigned.driverCoordinates)
-             setCoordenadas(result.data.driverAssigned.driverCoordinates)
-         })
-         setIdentificador(setInterval(() => {
-             axios.get(process.env.REACT_APP_SERVER_URL + `/package/pack/${idpackage}`)
-                 .then(result => {
-                     console.log("DATOS PACKETE: ", result.data.driverAssigned.driverCoordinates)
-                     setCoordenadas(result.data.driverAssigned.driverCoordinates)
-                 })
-         }, 10000))
-         return (
-             clearInterval(identificador)
-         )
-     }, [])
+         navigate("/profile")
+    }
+    const image = truck;
+    useEffect(() => {
+        axios.get(process.env.REACT_APP_SERVER_URL + `/package/pack/${idpackage}`)
+        .then(result => {
+
+            setCoordenadas(result.data.driverAssigned.driverCoordinates)
+        })
+        setIdentificador(setInterval(() => {
+            axios.get(process.env.REACT_APP_SERVER_URL + `/package/pack/${idpackage}`)
+                .then(result => {
+                
+                    setCoordenadas(result.data.driverAssigned.driverCoordinates)
+                })
+        }, 10000))
+        return (
+            clearInterval(identificador)
+        )
+    }, [])
 
     return (
-        <>
-            <button onClick={stop}>Stop</button>
+        <div >
+            <button className="btn btn-primary mt-2 mb-2" onClick={stop}>Go back</button>
             <Flex
                 position='relative'
                 flexDirection='column'
@@ -55,11 +45,11 @@ function Tracking() {
                 h='100vh'
                 w='100vw'
             >
-                <Box position='absolute' left={0} top={0} h='100%' w='100%'>
+                <Box position='absolute' left={50} top={70} h='100%' w='100%'>
                     <GoogleMap
                         center={coordenadas}
                         zoom={15}
-                        mapContainerStyle={{ width: '50%', height: '50%' }}
+                        mapContainerStyle={{ width: '80%', height: '50%' }}
                         options={{
                             zoomControl: true,
                             mapTypeControl: true,
@@ -69,6 +59,6 @@ function Tracking() {
                     </GoogleMap>
                 </Box>
             </Flex>
-        </>)
+        </div>)
 }
 export default Tracking;

@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
 import { AuthContext } from "../../context/auth.context";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import Autocomplete from "../../components/Autocomplete/Autocomplete"
 import Navbar from "../../components/Navbar/Navbar";
@@ -64,7 +63,7 @@ function ProfilePage() {
       <Navbar />
       {!user.isTransporter && 
 
-      <div className="row">
+      <div className="row m-0">
         <div className="col-sm-4"><UserInfo/></div>
         <div className="col-sm-8">
         <Link to={`/user/newPackage`}><button type="button" className="btn btn-primary m-5">New package</button></Link>

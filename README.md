@@ -27,20 +27,26 @@ Fork and clone this repo and follow the belo instructions
 
 | Role             | Capabilities                                                                                                                                                                                                                      | Properities          |
 | :--------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| **User/User**    | User can `login/logout` to his/her personal profile and read/delete/create new packages, modify his/her personal data and one time package is send, can track the estatus of his sending looking the real position of the Carrier | isTransporter: false |
-| **User/Carrier** | Carrier have access to `login/logout` and to all packages, stored by sending day, and a map with the most optimal route to deliver his/her cargo                                                                                  | isTransporter: true  |
+| **User/User**    | User can `login/logout` to his/her personal profile and read/delete/create new packages, modify his/her personal data and one time package is send, can track the status of his sending looking the real position of the driver | isTransporter: false |
+| **User/Carrier** | Driver have access to `login/logout` and to all packages, stored by sending day, and a map with the most optimal route to deliver his/her cargo                                                                                  | isTransporter: true  |
 
-### Routes
+### User Routes
+| Method     | Endpoint              | Description                                            |
+| :--------- | :-------------------- | :----------------------------------------------------- |
+| **POST**   | `/auth/login`         | User login                                             |
+| **POST**   | `/auth/signup`        | User sign up information in database                   |
+| **GET**    | `/auth/verify`        | Verify user inserted information with registred user in Database |
+| **POST**   | `/user/avatar/${idUser}`       |  Update the avatar for user in Database                             |
+| **GET**    | `/user/avatar/${idUser}`       | Retrieve the avatar from user in Database                           |
+
+
+### Package routes
 
 | Method     | Endpoint              | Description                                            |
 | :--------- | :-------------------- | :----------------------------------------------------- |
-| **POST**   | `/auth/login`         | return axios.post("http://localhost:5005/auth/login")  |
-| **POST**   | `/auth/signup`        | return axios.post("http://localhost:5005/auth/signup") |
-| **GET**    | `/auth/verify`        | return axios.post("http://localhost:5005/auth/verify") |
-| **POST**   | `/api/examples`       | Send all packages to user                              |
-| **GET**    | `/api/examples`       | Create a new package                                   |
-| **GET**    | `/api/examples/${id}` | Send a especific information from edit form            |
-| **PUT**    | `/api/examples/${id}` | Edit especific package base on his ID                  |
-| **DELETE** | `/api/examples/${id}` | Delete especific package base on his ID                |
-
+| **GET**    | `/package/all` | Receive all the packages            |
+| **GET**    | `/package/${idPackage}` | Get a package by id                 |
+| **POST** | `/package/new` | Create a new package                |
+| **PUT** | `/package/${packageId}/edit` | Edit the package by id                |
+| **DELETE** | `/package/delete/${packageId}` | Delete package by id                |
 

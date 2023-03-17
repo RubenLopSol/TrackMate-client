@@ -12,13 +12,13 @@ function UserInfo (){
       uploadData.append("avatar", e.target.files[0]);
       userService.uploadImage(uploadData)
       .then(response=>{
-        console.log("After uploading the avatar to Cloudinary :: ", response);
+        
             setAvatar(response.fileUrl);
         })
         .catch(err => console.log("Error while uploading the file: ", err));
     };
 
-    // Retrieve the latest avatar from Database
+
     const getAvatar = () => {
       userService
       .avatarFromDB(user._id)
@@ -32,7 +32,7 @@ function UserInfo (){
     }, [])
 
 
-    // handlesubmit to send the avatar to DB
+
     const handleSubmit = (e) =>{
         e.preventDefault();
         userService.avatarDB(user._id,{ avatar })

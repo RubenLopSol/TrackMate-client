@@ -6,45 +6,37 @@ import { AuthContext } from "../../context/auth.context";
 function UserInfo (){
     const [avatar, setAvatar] = useState("");
     const { user } = useContext(AuthContext);
-    //console.log("user info before uploading image ::",user)
+
     const handleFileUpload = (e) => {
-        const uploadData = new FormData();
-        uploadData.append("avatar", e.target.files[0]);
-        userService.uploadImage(uploadData)
-        .then(response=>{
-            console.log("After uploading the avatar to Cloudinary :: ", response);
+      const uploadData = new FormData();
+      uploadData.append("avatar", e.target.files[0]);
+      userService.uploadImage(uploadData)
+      .then(response=>{
+        console.log("After uploading the avatar to Cloudinary :: ", response);
             setAvatar(response.fileUrl);
-            localStorage.setItem("avatar", response.fileUrl); // store the image URL in local storage
         })
         .catch(err => console.log("Error while uploading the file: ", err));
     };
-    const getAvatar = () => {
-        userService
-          .avatarFromDB(user._id)
-          .then((result) => {
-            console.log("result", result.avatar);
-            setAvatar(result.avatar);
-            console.log("This is coming from Database");
-          })
-          .catch((err) => console.log(err));
-      };
 
-    useEffect(() => {
-        const storedAvatar = localStorage.getItem("avatar");
-        if (storedAvatar) {
-          setAvatar(storedAvatar);
-        }
-    }, []);
+    // Retrieve the latest avatar from Database
+    const getAvatar = () => {
+      userService
+      .avatarFromDB(user._id)
+      .then((result) => {
+        setAvatar(result);
+      })
+      .catch((err) => console.log(err));
+    };
+    useEffect(()=> {
+      getAvatar();
+    }, [])
+
 
     // handlesubmit to send the avatar to DB
     const handleSubmit = (e) =>{
         e.preventDefault();
         userService.avatarDB(user._id,{ avatar })
-        console.log("After update avator to DB",avatar)
-        //console.log("id=",user._id)
         .then((res)=>{ 
-            console.log("Result from Database",res)
-            console.log("This is the result from post to database")
             setAvatar(res)
         })
         .catch((err)=>console.log(err)) 
@@ -72,7 +64,7 @@ function UserInfo (){
           </div>
         </div>
 
-        <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">

@@ -78,16 +78,16 @@ function ProfilePage() {
                       <h5 className="card-title">Tracking number: {data._id}</h5>
                       <p className="card-text">Address: {data.address}</p>
                       <p className="card-text">State: {data.isTransported}</p>
-                      {data.isTransported === "Pending" && <button type="button" className="btn btn-primary m-2" onClick={()=> setIdPackage(data._id)} data-bs-toggle="modal" data-bs-target="#exampleModal">Edit adress</button>}
+                      {data.isTransported === "Pending" && <button type="button" className="btn btn-primary m-2" onClick={()=> setIdPackage(data._id)} data-bs-toggle="modal" data-bs-target="#EditModal">Edit adress</button>}
                       {data.isTransported === "In delivery" && <Link className="btn btn-primary m-2" to={`/user/tracking/${data._id}`}>Tracking</Link>}
-                      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div className="modal fade" id="EditModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div className="modal-dialog">
                           <div className="modal-content">
                             <div className="modal-header">
                               <h1 className="modal-title fs-5" id="exampleModalLabel">Edit adress</h1>
                               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            {/* Formulario para editar packete */}
+
                             <div className="modal-body">
                               <div className="w-50 mx-auto">
                                 <form onSubmit={submitEditHandler}>
@@ -96,24 +96,21 @@ function ProfilePage() {
                                     <Autocomplete getAdressHandler={getAdressHandler} />
                                   </div>
                                   <div className="mb-3">
-                                 
                                     <div className="modal-footer">
-                                    <button type="submit" className="btn btn-danger me-2" data-bs-dismiss="modal" onClick={()=> deleteHandler(data._id)}>Delete</button>
-
-                                    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Save</button>
-
+                                      <button type="submit" className="btn btn-danger me-2" data-bs-dismiss="modal" onClick={()=> deleteHandler(data._id)}>Delete</button>
+                                      <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Save</button>
                                     </div>
                                   </div>
                                 </form>
                               </div>
                             </div>
+                            
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              
             )
           })}
         </div>

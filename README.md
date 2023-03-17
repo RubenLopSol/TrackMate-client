@@ -8,7 +8,9 @@ Below you will find more specific information about the code implemented in this
 
 ### Project Deployment
 
-The project is deployed using fly.dev **[here](https://fly.io/apps/trackmateclient)**
+The server side from this project is deployed using fly.dev **[here](https://fly.io/apps/trackmateserver)**
+
+The client side from this project is deployed using netlify **[here](https://trackmateclient.netlify.app)**
 
 ### Work structure
 

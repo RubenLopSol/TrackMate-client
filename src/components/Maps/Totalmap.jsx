@@ -41,15 +41,17 @@ function TotalMap() {
   }
 
   return (
-    <>
+    <div className='w-50'>
       <Flex
+        display='flex'
+        flexDirection='row'
         display='flex'
         flexDirection='row'
         alignItems='center'
         h='100vh'
         w='70vw'
       >
-        <Box position='relative' left={40} top={190} h='150%' w='100%'>
+        <Box position='relative' left={40} top={250} h='150%' w='100%'>
           <GoogleMap
             center={center}
             zoom={15}
@@ -68,7 +70,7 @@ function TotalMap() {
                     <div>
                       <p>{pack._id}</p>
                       <p>{pack.address}</p>
-                      <button onClick={() => addPackageHandler(pack._id)}>Add to route</button>
+                      <button className="btn btn-info btn-lg btn-block btn-sm "  onClick={() => addPackageHandler(pack._id)}>Add to route</button>
                     </div>
                   </InfoWindow>
                 </Marker>
@@ -79,7 +81,7 @@ function TotalMap() {
           </GoogleMap>
         </Box>
       </Flex>
-    </>
+    </div>
   )
 }
 export default TotalMap;

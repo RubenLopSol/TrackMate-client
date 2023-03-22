@@ -9,27 +9,26 @@ import { Link } from "react-router-dom";
 function SelectTrans() {
   const { user } = useContext(AuthContext)
   return (
-    <>
+    <div>
       <Navbar />
       <div className="link">
-        <Link className="btn btn-primary mx-auto mt-3" to="/user/navigation">Start navigation</Link>
+        <Link className="btn btn-info btn-lg btn-block mt-4 mx-auto" to="/user/navigation">Start navigation</Link>
       </div>
               
       {user.isTransporter &&
-        <div style={{overflow: 'hidden'}}>
+      <div style={{overflow:"hidden"}}>
           <div className="row" >
             <div className="col-sm-8">
               <Totalmap />
             </div>
-            <div className="col-sm-4 mt-5">
+            <div className="col-sm-3 mt-5 ">
               <SelectedPackages />
             </div>
-          </div>
-
-        </div>
+          </div> 
+        </div>      
       }
           
-    </>
+    </div>
   );
 }
 export default SelectTrans;

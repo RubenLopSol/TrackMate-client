@@ -101,10 +101,10 @@ const clickHandler = () => {
   return (
     <>
     <div>
-    <Link className="mt-5 btn btn-primary" to ="/profile" onClick={clickHandler}>Finish your day!</Link>
+    <Link className="btn btn-info btn-lg btn-block mt-4" to ="/profile" onClick={clickHandler}>Finish your day!</Link>
     </div>
     <div className="row">
-    <div className="col-sm-7 mt-5 ms-5">
+    <div className="col-sm-7 mt-5 ms-5 ">
     <Flex
       position='relative'
       flexDirection='column'
@@ -123,6 +123,7 @@ const clickHandler = () => {
             mapTypeControl: true,
           }}
           onLoad={map => setMap(map)}
+          
         >
           <Marker position={center} />
           {driverPackages.map((pack) => (
@@ -150,12 +151,12 @@ const clickHandler = () => {
       
     </Flex>
     </div>
-    <div className="col-sm-4 me-2 mt-5">
+    <div className="col-sm-4 me-2 mt-5 border border-5" >
     <SelectedPackages />
     <div spacing={2}>        
 
           <ButtonGroup>
-            <Button type='submit' onClick={calculateRoute}>
+            <Button type='submit' className="btn btn-info btn-lg btn-block" onClick={calculateRoute}>
               Calculate Route
             </Button>
           </ButtonGroup>

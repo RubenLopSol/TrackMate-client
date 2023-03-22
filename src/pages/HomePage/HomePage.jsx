@@ -41,8 +41,7 @@ function Index() {
                                 <img src={Gerard} className="rounded-circle w-50 h-75" alt="Gerard"></img>
                             </div>
                             <div className="col-md-4 m-auto">
-                                <h4>Rubén Lopez Solé</h4>
-                                <img src={Ruben} className="rounded-circle w-50 h-75" alt="Ruben"></img>
+                                <h4>Rubén López Solé</h4>
                             </div>
                             <div className="col-md-4 m-auto">
                                 <h4>Xabier Naseem Mohammad</h4>
@@ -56,7 +55,7 @@ function Index() {
 
             </div>
             <footer style={{ backgroundColor: "black", color: "white", padding: "20px" }}>
-                <p>First Published: March-17-2023 © 2023 TrackMate.com All rights reserved for Gerard Bové, Rubén Solé & Xabier Naseem Mohammad.</p>
+                <p>First Published: March-17-2023 © 2023 TrackMate.com All rights reserved for Gerard Bové, Rubén López & Xabier Naseem Mohammad.</p>
             </footer>
 
         </>

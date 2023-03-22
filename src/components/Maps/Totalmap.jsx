@@ -41,19 +41,19 @@ function TotalMap() {
   }
 
   return (
-    <>
+    <div className='w-50'>
       <Flex
-        position='relative'
-        flexDirection='column'
+        display='flex'
+        flexDirection='row'
         alignItems='center'
         h='100vh'
-        w='100vw'
+        w='70vw'
       >
-        <Box position='absolute' left={70} top={70} h='150%' w='100%'>
+        <Box position='relative' left={40} top={250} h='150%' w='100%'>
           <GoogleMap
             center={center}
             zoom={15}
-            mapContainerStyle={{ width: '50%', height: '50%' }}
+            mapContainerStyle={{ width: '90%', height: '50%' }}
             options={{
               zoomControl: true,
               mapTypeControl: true,
@@ -68,7 +68,7 @@ function TotalMap() {
                     <div>
                       <p>{pack._id}</p>
                       <p>{pack.address}</p>
-                      <button onClick={() => addPackageHandler(pack._id)}>Add to route</button>
+                      <button className="btn btn-info btn-lg btn-block btn-sm "  onClick={() => addPackageHandler(pack._id)}>Add to route</button>
                     </div>
                   </InfoWindow>
                 </Marker>
@@ -79,7 +79,7 @@ function TotalMap() {
           </GoogleMap>
         </Box>
       </Flex>
-    </>
+    </div>
   )
 }
 export default TotalMap;

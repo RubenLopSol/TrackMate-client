@@ -11,7 +11,7 @@ function SelectTrans() {
   return (
     <div>
       <Navbar />
-      <div className="link">
+      <div style={{display: 'flex'}}>
         <Link className="btn btn-info btn-lg btn-block mt-4 mx-auto" to="/user/navigation">Start navigation</Link>
       </div>
               

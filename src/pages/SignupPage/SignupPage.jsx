@@ -63,51 +63,71 @@ function SignupPage() {
   };
 
   return (
-    <div className="SignupPage w-50 mx-auto row">
-      <h1 className="mt-2 mb-4">Sign Up</h1>
-      <form onSubmit={handleSignupSubmit}>
-        <select className="form-select" aria-label="Default select example" onChange={(e) => SetIsTransporter(e.target.value)}>
-          <option>Select User or Driver</option>
-          <option value={false}>User</option>
-          <option value={true}>Driver</option>
-        </select>
+    <section className="vh-100">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-sm-6 text-black">
+            <div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+              <form onSubmit={handleSignupSubmit} style={{width: "23rem"}}>
 
-        <div className="mt-4 mb-4">
-          <label htmlFor="exampleInputuserName" className="form-label mb-1">Name</label>
-          <input type="text" className="form-control" id="exampleInputuserName" value={username} onChange={(e) => setuserName(e.target.value)} />
-          <div className="form-text"></div>
-        </div>
+                <h3 className="fw-normal mb-3 pb-3" style={{letterSpacing: "1px"}}>Sign Up</h3>
+                
+                <div className="form-outline mb-4">
+                  <select className="form-select form-control form-control-lg" aria-label="Default select example" onChange={(e) => SetIsTransporter(e.target.value)}>
+                    <option></option>
+                    <option value={false}>User</option>
+                    <option value={true}>Driver</option>
+                  </select>
+                  <label htmlFor="exampleInputuserName" className="form-label">Select role</label>
+                </div>
+    
+                <div className="form-outline mb-4">
+                  <input type="text" className="form-control form-control-lg" id="exampleInputuserName" value={username} onChange={(e) => setuserName(e.target.value)} />
+                  <label htmlFor="exampleInputuserName" className="form-label">Name</label>
+                  <div className="form-text"></div>
+                </div>
 
-        <div className="mt-4 mb-4">
-          <label htmlFor="exampleInputuserlastName" className="form-label mb-1">Last name</label>
-          <input type="text" className="form-control" id="exampleInputuserlastName" value={lastname} onChange={(e) => setlastName(e.target.value)} />
-          <div className="form-text"></div>
-        </div>
+                <div className="form-outline mb-4">
+                  <input type="text" className="form-control form-control-lg" id="exampleInputuserlastName" value={lastname} onChange={(e) => setlastName(e.target.value)} />
+                  <label htmlFor="exampleInputuserlastName" className="form-label">Last name</label>
+                  <div className="form-text"></div>
+                </div>
 
-        <div className="mt-4 mb-4">
-          <label htmlFor="exampleInputEmail1" className="form-label mb-1">Email address</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <div id="emailHelp" className="form-text"></div>
-        </div>
-        <div className="mt-4 mb-4">
-          <label htmlFor="exampleInputPassword1" className="form-label mb-1">Password</label>
-          <input type="password" className="form-control" id="exampleInputPassword1" onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <div className="mt-4 mb-2">
-          <label htmlFor="exampleInputPasswordRep" className="form-label mb-1">Repeat password</label>
-          <input type="password" className="form-control" id="exampleInputPasswordRep" onChange={(e) => setPasswordRep(e.target.value)} />
-        </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
-      </form>
+                <div className="form-outline mb-4">
+                  <input type="email" className="form-control form-control-lg" id="exampleInputEmail1" aria-describedby="emailHelp" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+                  <div id="emailHelp" className="form-text"></div>
+                </div>
+                
+                <div className="form-outline mb-4">
+                  <input type="password" className="form-control form-control-lg" id="exampleInputPassword1" onChange={(e) => setPassword(e.target.value)} />
+                  <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+                </div>
 
-      {errorMessage && <div className="alert alert-danger m-4 w-5 mx-auto" role="alert">
-        {errorMessage}
-      </div>}
-      <div className="mt-3">
-        <p>Already have account?</p>
-        <Link className="btn btn-primary" to="/login">Login</Link>
+                <div className="form-outline mb-4">
+                  <input type="password" className="form-control form-control-lg" id="exampleInputPasswordRep" onChange={(e) => setPasswordRep(e.target.value)} />
+                  <label htmlFor="exampleInputPasswordRep" className="form-label">Repeat password</label>
+                </div>
+                
+                {errorMessage && <div className="alert alert-danger mx-auto" role="alert">
+                  <p className="m-auto">{errorMessage}</p>
+                </div>}
+
+                <div className="pt-1 mb-4">
+                  <button className="btn btn-info btn-lg btn-block" type="submit">Submit</button>
+                </div>
+
+                <p>Already have account? <Link to="/login" className="link-info">Login here</Link></p>
+              </form>
+            </div>
+          </div>
+          <div className="col-sm-6 px-0 d-none d-sm-block">
+            <img src="https://autoescuelasanmateo.es/wp-content/uploads/2022/11/curso-mercancias-cap.jpg"
+            alt="Login images" className="w-100 vh-100" style={{objectFit: "cover", objectPosition: "left"}} />
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 

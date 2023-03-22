@@ -5,7 +5,7 @@ import { packageContext } from "../../context/packages.context"
 function SelectedPackages() {
     const { driverPackages } = useContext(packageContext)
     return (
-        <>
+        <div className='border border-5'>
             <h2 className="mb-2">Your day :)</h2>
             <div>
             <table className="table mt-3">
@@ -27,7 +27,7 @@ function SelectedPackages() {
                     })}
                 </table>
             </div>
-        </>
+        </div>
     )
 }
 

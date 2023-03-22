@@ -16,17 +16,17 @@ function SelectTrans() {
       </div>
               
       {user.isTransporter &&
-        <>
-          <div className="row">
-            <div className="col-sm-7">
+        <div style={{overflow: 'hidden'}}>
+          <div className="row" >
+            <div className="col-sm-8">
               <Totalmap />
             </div>
-            <div className="col-sm-4 me-2 mt-5">
+            <div className="col-sm-4 mt-5">
               <SelectedPackages />
             </div>
           </div>
 
-        </>
+        </div>
       }
           
     </>

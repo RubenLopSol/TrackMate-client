@@ -1,6 +1,5 @@
 import "./NewPackage.css";
 import { useState, useContext } from "react"
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Autocomplete from "../../components/Autocomplete/Autocomplete"
 import Loading from "../../components/Loading/Loading";

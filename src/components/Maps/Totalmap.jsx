@@ -2,7 +2,7 @@ import { useJsApiLoader, GoogleMap, Marker, InfoWindow } from '@react-google-map
 import { useState, useEffect, useContext } from 'react'
 import box from "./box.png"
 import { packageContext } from '../../context/packages.context'
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, position } from '@chakra-ui/react'
 import packageService from "../../services/package.service";
 import axios from 'axios'
 import { AuthContext } from '../../context/auth.context'
@@ -43,17 +43,17 @@ function TotalMap() {
   return (
     <>
       <Flex
-        position='relative'
-        flexDirection='column'
+        display='flex'
+        flexDirection='row'
         alignItems='center'
         h='100vh'
-        w='100vw'
+        w='70vw'
       >
-        <Box position='absolute' left={70} top={70} h='150%' w='100%'>
+        <Box position='relative' left={40} top={190} h='150%' w='100%'>
           <GoogleMap
             center={center}
             zoom={15}
-            mapContainerStyle={{ width: '50%', height: '50%' }}
+            mapContainerStyle={{ width: '90%', height: '50%' }}
             options={{
               zoomControl: true,
               mapTypeControl: true,

@@ -1,6 +1,6 @@
 import "./LoginPage.css";
 import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
 import authService from "../../services/auth.service";
 import Loading from "../../components/Loading/Loading";
@@ -50,31 +50,50 @@ function LoginPage() {
   if (isLoading) {
     return <Loading />
   }
-  return (
-    <div className="LoginPage w-50 mx-auto row">
-      <h3 className="mt-2 mb-4">Login</h3>
+  return (   
+    <section className="vh-100">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-sm-6 text-black">
+            <div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
 
-      <form onSubmit={handleLoginSubmit}>
+              <form onSubmit={handleLoginSubmit} style={{width: "23rem"}}>
 
-        <div className="mt-2 mb-4">
-          <label>Email address</label>
-          <input type="email" className="form-control mt-2" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <h3 className="fw-normal mb-3 pb-3" style={{letterSpacing: "1px"}}>Log in</h3>
+
+                <div className="form-outline mb-4">
+                  <input type="email" id="form2Example18" className="form-control form-control-lg" value={email} onChange={(e)=> setEmail(e.target.value)} />
+                  <label className="form-label" htmlFor="form2Example18">Email address</label>
+                </div>
+
+                <div className="form-outline mb-4">
+                  <input type="password" id="form2Example28" className="form-control form-control-lg" value={password} onChange={(e)=> setPassword
+                  (e.target.value)} />
+                  <label className="form-label" htmlFor="form2Example28">Password</label>
+                </div>
+                {errorMessage && <div className="alert alert-danger mx-auto" role="alert">
+                  <p className="m-auto">{errorMessage}</p>
+                </div>}
+
+                <div className="pt-1 mb-4">
+                  <button className="btn btn-info btn-lg btn-block" type="submit">Login</button>
+                </div>
+
+                <p>Don't have an account? <Link to="/signup" className="link-info">Register here</Link></p>
+
+              </form>
+
+            </div>
+          </div>
+
+          <div className="col-sm-6 px-0 d-none d-sm-block">
+            <img src="https://autoescuelasanmateo.es/wp-content/uploads/2022/11/curso-mercancias-cap.jpg"
+              alt="Login images" className="w-100 vh-100" style={{objectFit: "cover", objectPosition: "left"}} />
+          </div>
+
         </div>
-
-        <div className="mt-4 mb-3">
-          <label>Password</label>
-          <input type="password" className="form-control mt-2" placeholder="Enter password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-
-        <button type="submit" className="btn btn-primary">Login</button>
-      </form>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-      <div className="mt-3">
-        <p>Don't have an account yet ? </p>
-        <Link id="link" to="/signup" className="text-muted btn btn-primary">Sign up</Link>
-
       </div>
-    </div>
+    </section>
   );
 }
 

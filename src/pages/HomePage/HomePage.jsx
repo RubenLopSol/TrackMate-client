@@ -42,6 +42,7 @@ function Index() {
                             </div>
                             <div className="col-md-4 m-auto">
                                 <h4>Rubén López Solé</h4>
+                                <img src={Ruben} className="rounded-circle w-50 h-75" alt="Ruben"></img>
                             </div>
                             <div className="col-md-4 m-auto">
                                 <h4>Xabier Naseem Mohammad</h4>
